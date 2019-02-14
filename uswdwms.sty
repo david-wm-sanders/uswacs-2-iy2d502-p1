@@ -1,0 +1,272 @@
+% Packages imported by the style with some configuration for certain packages
+\usepackage[T1]{fontenc}
+\usepackage[UKenglish]{babel}
+\usepackage[useregional]{datetime2}
+% \usepackage[useregional,showdow]{datetime2}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[a4paper, margin=0.75in]{geometry}
+\usepackage{enumitem}
+\usepackage[bottom]{footmisc}
+\usepackage[colorlinks=true, linkcolor=black, citecolor=black, urlcolor=blue]{hyperref}
+\usepackage[nottoc,numbib]{tocbibind}
+\usepackage[round]{natbib}
+\usepackage{fancyvrb}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{tabularx, makecell}
+\usepackage[table]{xcolor}
+\usepackage{colortbl}
+\usepackage{pdfpages}
+\usepackage{caption}
+\usepackage{textcomp}
+\usepackage{latexsym}
+\usepackage[newfloat]{minted}
+\usepackage{environ}
+\usepackage{fontawesome}
+\usepackage{layouts}
+% -
+
+% Configuration
+% Hack some nicer URL-breaking - force breaks at dashes/hyphens in URLS!
+% \def\UrlBreaks{\do\/\do\-}
+\makeatletter \g@addto@macro{\UrlBreaks}{\do\/\do\-} \makeatother
+% Configure colours
+\definecolor{terminalbg-gray}{gray}{0.95}
+\definecolor{ultralight-gray}{gray}{0.9}
+\definecolor{light-gray}{gray}{0.75}
+\definecolor{fader-gray}{gray}{0.5}
+\definecolor{deep-gray}{gray}{0.4}
+\definecolor{nicer-blue}{HTML}{005cc5}
+% Configure vuln colours
+\definecolor{critical-red}{HTML}{cc0500}
+\definecolor{high-red}{HTML}{df3d03}
+\definecolor{medium-amber}{HTML}{f9a009}
+\definecolor{low-amber}{HTML}{ffcb0d}
+% Reconfigure hyperref
+\hypersetup{colorlinks=true, linkcolor=black, citecolor=black, urlcolor=nicer-blue}
+% Set the default graphicx path
+\graphicspath{{images/}}
+% Change font to Palatino
+\renewcommand{\rmdefault}{ppl}
+% Change the list item spacing
+\setlist{noitemsep}
+% Set the bibliography style
+\bibliographystyle{usw}
+% Configure fancyhdr
+\renewcommand{\headrulewidth}{0.1mm}
+\renewcommand{\footrulewidth}{0.1mm}
+\renewcommand{\headrule}{
+  \vspace{0.8mm}\vspace{-\baselineskip}
+  \textcolor{light-gray}{\rule{\linewidth}{\headrulewidth}}
+}
+\renewcommand{\footrule}{
+  % \vspace*{0.8mm}\vspace*{\baselineskip}
+  \textcolor{light-gray}{\rule{\linewidth}{\footrulewidth}}
+}
+% Set the default minted style
+\usemintedstyle{rainbow_dash}
+\setminted{autogobble,breaklines,fontsize=\small,frame=leftline,framerule=0.2pt,framesep=2mm,linenos,numbersep=3pt,python3,rulecolor=ultralight-gray}
+% -
+
+% Custom functions
+% Set up an inline todo command
+\newcommand{\todo}[1]{\textcolor{red}{todo: #1}}
+
+% Set up a todo environment
+\newenvironment{todoenv}
+  {\color{red}todo:}
+  {\color{black}}
+
+% Set up a terminal command block
+\newcommand{\term}[1]{\colorbox{terminalbg-gray}{\texttt{#1}}}
+
+% Make fancy headers and footers for reports
+\newcommand{\makeheadersandfooters}[4]{
+  \fancyhf{}
+  \lhead{\textcolor{light-gray}{#1}}
+  \rhead{\textcolor{light-gray}{#2}}
+  \lfoot{\textcolor{light-gray}{#3}}
+  \rfoot{\textcolor{light-gray}{#4}}
+}
+
+% Make a fancy title page
+\newcommand{\makeuswtitlepage}{
+  \begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    % Insert logo
+    \includegraphics[scale = 0.15]{usw_logo.jpg}\\
+    % Insert institution and course titles
+    \textsc{\LARGE \institutionid\\\Large \unicoursename}\\[1cm]
+
+    % Insert double-line top
+    \textcolor{fader-gray}{\rule{\linewidth}{0.2mm}}\\
+    \vspace{0.8mm}\vspace{-\baselineskip}
+    \textcolor{fader-gray}{\rule{\linewidth}{0.2mm}}\\[0.5cm]
+
+    % Insert report title
+    %% v3
+    {\Huge\bfseries \unimodulecode}\\
+    \textsc{\Large \unimodulename}\\
+    %%
+    \textcolor{light-gray}{\rule{\linewidth}{0.2mm}}\\[0.5cm]
+    \textsc{\Large \thetitle}\\
+
+    % Insert lines bottom
+    \textcolor{fader-gray}{\rule{\linewidth}{0.2mm}}\\
+    \vspace{0.8mm}\vspace{-\baselineskip}
+    \textcolor{fader-gray}{\rule{\linewidth}{0.2mm}}\\[2cm]
+
+    % Insert italicised date
+    {\large \textit{\thedate}}\\[2cm]
+
+    % \begin{minipage}[t][5cm][t]{0.4\linewidth}
+    \begin{minipage}[t]{0.4\linewidth}
+      \vspace{0pt}
+      \raggedleft
+      \textcolor{fader-gray}{\textit{Submitted to:}}\\
+      \unimodulelect\\
+    \end{minipage}\hspace{5mm}\textcolor{light-gray}{\vline width 0.1mm}\hspace{4mm}~%
+    \begin{minipage}[t]{0.4\linewidth}
+      \vspace{0pt}
+      \raggedright
+      \textcolor{fader-gray}{\textit{Author(s):}}\\
+      \theauthor\\\unistudentid\\
+    \end{minipage}\\
+
+  \end{titlepage}
+}
+
+% Add an environment equivalent to \makeuswtitlepage that allows for further content to be inserted onto the titlepage
+\NewEnviron{uswtitlepage}[0]{
+  \begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    % Insert logo
+    \includegraphics[scale = 0.15]{usw_logo.jpg}\\
+    % Insert institution and course titles
+    \textsc{\LARGE \institutionid\\\Large \unicoursename}\\[1cm]
+
+    % Insert double-line top
+    \textcolor{fader-gray}{\rule{\linewidth}{0.2mm}}\\
+    \vspace{0.8mm}\vspace{-\baselineskip}
+    \textcolor{fader-gray}{\rule{\linewidth}{0.2mm}}\\[0.5cm]
+
+    % Insert report title
+    %% v3
+    {\Huge\bfseries \unimodulecode}\\
+    \textsc{\Large \unimodulename}\\
+    %%
+    \textcolor{light-gray}{\rule{\linewidth}{0.2mm}}\\[0.5cm]
+    \textsc{\Large \thetitle}\\
+
+    % Insert lines bottom
+    \textcolor{fader-gray}{\rule{\linewidth}{0.2mm}}\\
+    \vspace{0.8mm}\vspace{-\baselineskip}
+    \textcolor{fader-gray}{\rule{\linewidth}{0.2mm}}\\[1cm]
+
+    % Insert italicised date
+    {\large \textit{\thedate}}\\[1cm]
+
+    % \begin{minipage}[t][5cm][t]{0.4\linewidth}
+    \begin{minipage}[t]{0.4\linewidth}
+      \vspace{0pt}
+      \raggedleft
+      \textcolor{fader-gray}{\textit{Submitted to:}}\\
+      \unimodulelect\\
+    \end{minipage}\hspace{5mm}\textcolor{light-gray}{\vline width 0.1mm}\hspace{4mm}~%
+    \begin{minipage}[t]{0.4\linewidth}
+      \vspace{0pt}
+      \raggedright
+      \textcolor{fader-gray}{\textit{Author(s):}}\\
+      \theauthor\\\unistudentid\\
+    \end{minipage}\\[2cm]
+
+    \BODY
+
+  \end{titlepage}
+}
+
+% Make a fancy contact card
+% #1: image path for includegraphics
+% #2: image scale factor
+% TODO: Make column widths parameters too
+\NewEnviron{personcontact}[2]{
+\begin{table}[H]
+  \newcolumntype{i}{>{\raggedright\arraybackslash}p{1cm}}
+  \newcolumntype{v}{>{\raggedright\arraybackslash}p{6cm - 4\tabcolsep - 3\arrayrulewidth}}
+  \newcolumntype{z}{>{\raggedright\arraybackslash}p{5cm - 1\tabcolsep}}
+  % Force cells to align content to the centre
+  \renewcommand\cellalign{cc}
+  % DEBUG: \begin{tabularx}{7cm}{|i|v|}
+  \begin{tabularx}{7cm}{iv}
+    \arrayrulecolor{ultralight-gray}
+    \hline
+    \makecell[{{p{1cm}}}]{\includegraphics[scale=#2]{#1}}
+      & \makecell[{{p{5cm}}}]{
+        % DEBUG: \begin{tabularx}{5cm + 1\tabcolsep + 2\arrayrulewidth}{|z|}
+        \begin{tabularx}{5cm + 1\tabcolsep + 2\arrayrulewidth}{z}
+          % DEBUG: \hline
+          \BODY
+          % DEBUG: \hline
+        \end{tabularx}
+      }  \tabularnewline \hline
+  \end{tabularx}
+\end{table}
+}
+
+% Make a fancy vulnerability count table
+\newcommand{\makevulncounttable}[4]{
+\begin{table}[H]
+  % \caption{Count of vulnerabilities}
+  \label{tab:vulncount}
+  \newcolumntype{v}{>{\centering\arraybackslash}X}
+  \begin{tabularx}{1\textwidth}{v|v|v|v}
+    \arrayrulecolor{ultralight-gray}
+    \hline
+    \cellcolor{terminalbg-gray!25}\hyperref[sec:vuln_crit]{\textcolor{critical-red!75}{\LARGE\textbf{\textsc{Critical}}}} &
+    \cellcolor{terminalbg-gray!25}\hyperref[sec:vuln_high]{\textcolor{high-red!75}{\LARGE\textbf{\textsc{High}}}} &
+    \cellcolor{terminalbg-gray!25}\hyperref[sec:vuln_med]{\textcolor{medium-amber!75}{\LARGE\textbf{\textsc{Medium}}}} &
+    \cellcolor{terminalbg-gray!25}\hyperref[sec:vuln_low]{\textcolor{low-amber!75}{\LARGE\textbf{\textsc{Low}}}} \tabularnewline % \hline
+    \cellcolor{terminalbg-gray!25}\hyperref[sec:vuln_crit]{\textcolor{critical-red}{\Huge\textbf{#1}}} &
+    \cellcolor{terminalbg-gray!25}\hyperref[sec:vuln_high]{\textcolor{high-red}{\Huge\textbf{#2}}} &
+    \cellcolor{terminalbg-gray!25}\hyperref[sec:vuln_med]{\textcolor{medium-amber}{\Huge\textbf{#3}}} &
+    \cellcolor{terminalbg-gray!25}\hyperref[sec:vuln_low]{\textcolor{low-amber}{\Huge\textbf{#4}}} \tabularnewline \hline
+  \end{tabularx}
+\end{table}
+}
+
+% Make a display table
+\NewEnviron{displaytable}[2]{
+  \begin{table}[H]
+    % This argument allows us to set labels and captions optionally for the table
+    #1
+    \newcolumntype{v}{X}
+    \renewcommand\cellalign{cc}
+    \begin{tabularx}{1\textwidth}{|v|}
+      \arrayrulecolor{ultralight-gray}
+      \hline
+      \vspace{1pt}\cellcolor{ultralight-gray}\textcolor{deep-gray}{\large\textbf{\textsc{#2}}} \tabularnewline \hline
+      \cellcolor{terminalbg-gray!75}\makecell[{{p{1\textwidth}}}]{
+        \BODY
+      } \tabularnewline \hline
+    \end{tabularx}
+  \end{table}
+}
+
+% Make a display table itemize
+% TODO: Make so the list type is a param and also so more opts can be added by param
+\newcommand{\makedisplaytableitemize}[3]{
+  \begin{displaytable}{#1}{#2}
+    \begin{itemize}[leftmargin=2em,itemsep=0.1em,topsep=0pt,parsep=0pt]
+      #3
+    \end{itemize}
+  \end{displaytable}
+}
+
+% Define a codelisting environment for multi-page minted listings
+\newenvironment{codelisting}{\captionsetup{type=listing}}{}
+% -

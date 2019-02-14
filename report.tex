@@ -1,0 +1,44 @@
+\documentclass[12pt]{article}
+\usepackage{uswdwms}
+
+% Setup document variables
+\def \institutionid{University of South Wales}
+\def \unicoursename{Applied Cyber Security}
+\def \unimodulecode{acs00001}
+\def \unimodulename{\LaTeX\ Reports}
+\def \unimodulelect{Humanity\\AI}
+\title{Primer for USWACS Academic and Forensic Reports}
+\author{David Sanders}
+\def \unistudentid{dwms}
+\date{\today}
+
+\makeatletter
+\let\thetitle\@title
+\let\theauthor\@author
+\let\thedate\@date
+\makeatother
+%
+
+% Setup header and footer
+\pagestyle{fancy}
+% Create headers and footers with full datetime in regional text style
+% \makeheadersandfooters{\scriptsize\scshape \unimodulecode: \thetitle}{\scriptsize \unistudentid}{\footnotesize \DTMnow}{\footnotesize \thepage}
+
+% Create headers and footers with full datetime in ISO style
+\makeheadersandfooters{\scriptsize\scshape \unimodulecode: \thetitle}{\scriptsize \unistudentid}{\footnotesize {\DTMsetstyle{iso}\DTMnow}}{\footnotesize \thepage}
+
+% Create headers and footers with full datetime in regional numeric style
+% \makeheadersandfooters{\scriptsize\scshape \unimodulecode: \thetitle}{\scriptsize \unistudentid}{\footnotesize {\DTMsetregional[numeric]\DTMnow}}{\footnotesize \thepage}
+%
+
+\begin{document}
+\input{sections/_usw_titlepage.tex}
+\tableofcontents
+
+\pagebreak
+\section{Sample}
+blah blah blah
+
+% \noindent {\DTMsetstyle{iso}\today}
+
+\end{document}
