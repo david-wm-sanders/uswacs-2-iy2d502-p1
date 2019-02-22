@@ -1,6 +1,7 @@
 venv/
 __pycache__/
 _minted-report/
+_code_listings/
 
 *.aux
 *.log
