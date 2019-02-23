@@ -1,7 +1,7 @@
 \section{Deployment Methodology}
 Underlined is a basic methodology for deploying the server, MySQL, and the web application with gunicorn.
 
-\begin{enumerate}
+\begin{enumerate}[leftmargin=0em,label=\protect\listlabelcircle{\arabic*}]
   \item Set up Ubuntu Server 18.10 \footnote{\href{http://releases.ubuntu.com/18.10/ubuntu-18.10-live-server-amd64.iso}{\texttt{ubuntu-18.10-live-server-amd64.iso}}} using the Subiquity\footnote{\href{https://github.com/CanonicalLtd/subiquity}{\faGithub\ CanonicalLtd/subiquity}} installer
     \begin{enumerate}[label=\roman*\textasciitilde]
       \item Select \textit{Install Ubuntu Server} at the GRUB2 boot menu\\
@@ -38,8 +38,7 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
     \end{enumerate}
   \item Set up a containerised MySQL instance using docker
     \begin{enumerate}[label=\roman*\textasciitilde]
-      \item To start a MySQL container for the first time, run the \texttt{salapp/start\_mysql.sh} script \textit{(shown in Listing~\ref{lst:meth:start_mysql_sh})} with:\\
-        \term{sudo ./start\_mysql.sh}\\
+      \item To start a MySQL container for the first time, run the \texttt{salapp/start\_mysql.sh} script \textit{(shown in Listing~\ref{lst:meth:start_mysql_sh})} with \term{sudo ./start\_mysql.sh}\\
         This script will \term{run} a docker container:
         \begin{itemize}
           \item \term{--name mysql} -- named \texttt{mysql}

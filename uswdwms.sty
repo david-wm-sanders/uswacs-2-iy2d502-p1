@@ -27,6 +27,7 @@
 \usepackage{environ}
 \usepackage{fontawesome}
 \usepackage{layouts}
+\usepackage{tikz}
 % -
 
 % Configuration
@@ -57,7 +58,8 @@
 % Change font to Palatino
 \renewcommand{\rmdefault}{ppl}
 % Change the list item spacing
-\setlist{noitemsep}
+% \setlist{noitemsep}
+\setlist{itemsep=0.1em}
 % Set the bibliography style
 \bibliographystyle{usw}
 % Configure fancyhdr
@@ -274,4 +276,11 @@
 
 % Define a codelisting environment for multi-page minted listings
 \newenvironment{codelisting}{\captionsetup{type=listing}}{}
+
+% Circle something
+\newcommand*\listlabelcircle[1]{
+  \begin{tikzpicture}[baseline=(C.base)]
+    \node[draw,circle,inner sep=1pt,minimum size=3ex](C) {#1};
+  \end{tikzpicture}
+}
 % -
