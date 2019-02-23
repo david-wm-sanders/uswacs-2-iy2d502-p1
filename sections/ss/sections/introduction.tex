@@ -1,11 +1,13 @@
 \section{Introduction}
 \todo{an overarching view of the project requirements, methodology adopted, report layout, tests done, secure development strategies used, etc}
 
-For this assignment, our task was to deploy and secure a LAMP stack. As a solution for deploying web applications and sites, the term `LAMP' originally comes from the components: Linux \textit{(as the deployment operating system)}, Apache \textit{(as the HTTP web server)}, MySQL \textit{(as the database server/management system)}, and PHP \textit{(as the web site/application development language)}.
+For this assignment, my task was to deploy and secure a LAMP stack. As a solution for deploying web applications and sites, the term `LAMP' originally comes from the components: Linux \textit{(as the deployment operating system)}, Apache \textit{(as the HTTP web server)}, MySQL \textit{(as the database server/management system)}, and PHP \textit{(as the web site/application development language)}.
 
 However, in modern usage, the term "LAMP" refers to a deployment model where alternatives can be used in lieu of the original components.
 
 In seeking to meet the security constraints of the requirements, I endeavoured to choose development and deployment frameworks that would enable me to secure the web application and server as effectively as possible from the start.
+
+As such, I decided to deploy the MySQL and gunicorn/Flask instances in separate docker containers.
 
 \todo{more fluff here about docker, secure development with flask/python - it's easy af, testing strategy?}
 

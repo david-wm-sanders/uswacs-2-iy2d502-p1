@@ -5,10 +5,8 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
   \item Setting up Ubuntu Server 18.10
     \begin{enumerate}[label=\roman*:]
       \item Install Ubuntu Server 18.10 from \todo{iso} using the new subiquity\footnote{\href{https://github.com/CanonicalLtd/subiquity}{\faGithub\ CanonicalLtd/subiquity}} installer. \todo{IY2D502-2019-02-21-19-15-19.png}
-      \item Set a reasonable keyboard layout, evidenced in \todo{link to appendix} \todo{IY2D502-2019-02-21-19-16-03.png}
+      \item Set a reasonable keyboard layout, evidenced in \todo{link to appendix} \todo{IY2D502-2019-02-21-19-16-03.png}, to ensure passwords are typed correctly.
       \item Choose to install ubuntu \todo{IY2D502-2019-02-21-19-16-06.png} \todo{comment on MAAS options making ubuntu a good choice for docker dev (microk8s) and deployments}
-      \item \todo{comment on proxies: IY2D502-2019-02-21-19-16-24.png}
-      \item \todo{comment on mirrors: IY2D502-2019-02-21-19-16-32.png}
       \item Choose to use LVM when prompted to configure filesystem setup. \todo{IY2D502-2019-02-21-19-16-38.png} \todo{note how logical volumes could be adjusted to have separate /tmp, /var for logs, etc partitions (with nodev,noexec,etc) for improved security [IY2D502-2019-02-21-19-16-43.png]}
       \item Configure server -- set full name, server name, username, password. It is also possible to import SSH identities from GitHub, as shown in \todo{IY2D502-2019-02-21-19-17-27.png}, and thus configure immediate secure access over SSH with public-private key authentication.
       \item Reboot when prompted to finish the installation. Upon logging into the new server install, check for updates and upgrade if required. This is demonstrated in \todo{IY2D502-2019-02-21-19-22-44.png}
