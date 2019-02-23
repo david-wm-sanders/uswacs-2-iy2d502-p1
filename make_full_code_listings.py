@@ -79,7 +79,7 @@ if __name__ == '__main__':
                 tf.write("\\begin{codelisting}\n")
                 # Begin a minted env
                 lexer = ext_lint_map.get(f.suffix, "text")
-                tf.write(f"\\begin{{minted}}[breakanywhere]{{{lexer}}}\n")
+                tf.write(f"\\begin{{minted}}[fontsize=\\small,breakanywhere]{{{lexer}}}\n")
                 # Insert file contents
                 tf.write(f.read_text(encoding="utf-8"))
                 # tf.write("\n")
