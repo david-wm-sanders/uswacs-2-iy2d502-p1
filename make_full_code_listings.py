@@ -2,7 +2,7 @@
 """Generates LaTeX minted code listings from a root folder.
 
 Usage:
-    make_full_code_listings.py <root_dir> [--exclude-dirs=<dirs>]
+    make_full_code_listings.py <root_dir> [--not-files=<files>] [--not-dirs=<dirs>] [--not-exts=<exts>]
 """
 import itertools
 import sys
@@ -11,6 +11,7 @@ from pathlib import Path
 from docopt import docopt
 
 
+exclude_files = []
 exclude_dirs = [".git", "venv", "__pycache__"]
 exclude_exts = [".db", ".exe", ".pdf", ".png", ".jpeg"]
 output_dir = Path(__file__).parent / "sections/_code_listings/"
@@ -28,7 +29,7 @@ def recursively_find_dirs(root_dir):
     return dirs
 
 
-def patch_string_for_latex(s):
+def escape_string_for_latex(s):
     s = s.replace("_", "\\_")
     return s
 
@@ -46,10 +47,20 @@ if __name__ == '__main__':
         print("Can't find project root at '{root_dir}'... exiting.")
         sys.exit(1)
 
+    # Process excluded files
+    if args["--not-files"]:
+        exclude_files.extend(args["--not-files"].split(","))
+    print(f"Excluding files: {exclude_files}")
+
     # Process extra excluded dirs
-    if args["--exclude-dirs"]:
-        exclude_dirs.extend(args["--exclude-dirs"].split(","))
-    print(f"Excluding: {exclude_dirs}")
+    if args["--not-dirs"]:
+        exclude_dirs.extend(args["--not-dirs"].split(","))
+    print(f"Excluding dirs: {exclude_dirs}")
+
+    # Process extra excluded extensions
+    if args["--not-exts"]:
+        exclude_exts.extend(args["--not-exts"].split(","))
+    print(f"Excluding exts: {exclude_exts}")
 
     # Find all dirs, including and relative to root_dir, that are not excluded
     dirs = recursively_find_dirs(root_dir)
@@ -59,7 +70,7 @@ if __name__ == '__main__':
     tf_p = output_dir / f"{root_dir.name}.tex"
     with tf_p.open(mode="w", encoding="utf-8") as tf:
         # Write the initial section header
-        rdn = patch_string_for_latex(root_dir.name)
+        rdn = escape_string_for_latex(root_dir.name)
         tf.write(f"\\section{{Full Code Listings: \\texttt{{{rdn}}}}}\n")
 
         # For each directory, not excluded, find all files
@@ -69,12 +80,16 @@ if __name__ == '__main__':
             # Sort better
             files = sorted(files, key=lambda p: p.name)
             for f in files:
+                # Skip if excluded
+                if f.name in exclude_files:
+                    print(f" Excluding '{f.name}'")
+                    continue
                 # Figure out the subsection title
                 f_name_parts = list(itertools.dropwhile(lambda x: x != root_dir.name, f.parts))
                 f_name = "/".join(f_name_parts[1::])
-                f_name = patch_string_for_latex(f_name)
+                f_name_ltx = escape_string_for_latex(f_name)
                 # Write a subsection header for each file
-                tf.write(f"\\subsection{{\\texttt{{{f_name}}}}}\n")
+                tf.write(f"\\subsection{{\\texttt{{{f_name_ltx}}}}}\n")
                 # Begin a codelisting env
                 tf.write("\\begin{codelisting}\n")
                 # Begin a minted env
@@ -88,4 +103,4 @@ if __name__ == '__main__':
                 # Close codelisting env
                 tf.write("\\end{codelisting}\n")
                 # Insert pagebreak
-                print(f"Minted '{f_name}' as '{lexer}'...")
+                print(f" Minted '{f_name}' as '{lexer}'")
