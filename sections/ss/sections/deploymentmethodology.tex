@@ -5,24 +5,26 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
   \item Set up Ubuntu Server 18.10 \footnote{\href{http://releases.ubuntu.com/18.10/ubuntu-18.10-live-server-amd64.iso}{\texttt{ubuntu-18.10-live-server-amd64.iso}}} using the Subiquity\footnote{\href{https://github.com/CanonicalLtd/subiquity}{\faGithub\ CanonicalLtd/subiquity}} installer
     \begin{enumerate}[label=\roman*\textasciitilde]
       \item Select \textit{Install Ubuntu Server} at the GRUB2 boot menu\\
-      \textcolor{nicer-blue}{[Figure~\ref{fig:IY2D502-2019-02-21-19-15-19}]}
+      \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-19-15-19}]}
       \item For standard UK keyboards, set the layout and variant to \textit{English {UK}} and \textit{English (UK, extended, with Win keys)} respectively -- this will help to ensure that passwords are entered correctly\\
-      \textcolor{nicer-blue}{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-03}]}
+      \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-03}]}
       \item Select \textit{Install Ubuntu} for a normal server deployment \todo{talk a bit about MAAS alternative here}\\
-      \textcolor{nicer-blue}{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-06}]}
+      \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-06}]}
       \item Choose to set up Logical Volume Management \textit{(LVM)} when prompted to configure filesystem setup\\
-      \textcolor{nicer-blue}{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-38}]}
+      \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-38}]}
       \item Confirm the default LVM filesystem configuration provided by the installer \todo{note how logical volumes could be adjusted to have separate /tmp, /var for logs, etc partitions (with nodev,noexec,etc) for improved security [IY2D502-2019-02-21-19-16-43.png]}\\
-      \textcolor{nicer-blue}{[\textit{Figure~\ref{fig:IY2D502-2019-02-21-19-16-43}}]}
+      \textcolor{deep-gray}{[\textit{Figure~\ref{fig:IY2D502-2019-02-21-19-16-43}}]}
       \item Configure the server by providing a name, server name \textit{(hostname)}, username, password -- it is also possible to import SSH identities from GitHub, as exhibited in the screenshot, and thus configure immediate secure access over SSH with public-private key authentication\\
-      \textcolor{nicer-blue}{[Figure~\ref{fig:IY2D502-2019-02-21-19-17-27}]}
+      \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-19-17-27}]}
+      \item Review and chose snaps for install \textit{(this allows the server to be quickly provisioned)} -- select nothing here as Docker will be installed manually later in this methodology\\
+      \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-19-17-58}]}
       \item Reboot when prompted to finish the installation
       \item Upon logging into the new server install, check for updates and upgrade if required -- on Ubuntu, this is done with \texttt{apt} using the commands:
         \begin{itemize}
           \item \term{sudo apt update}
           \item \term{sudo apt upgrade}
         \end{itemize}
-      \textcolor{nicer-blue}{[Figure~\ref{fig:IY2D502-2019-02-21-19-22-44}]}
+      \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-19-22-44}]}
     \end{enumerate}
   \item Download latest \texttt{salapp}
     \begin{enumerate}[label=\roman*\textasciitilde]
@@ -32,13 +34,28 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
   \item Install \texttt{docker-ce}\footnote{\href{https://github.com/docker/docker-ce}{\faGithub\ docker/docker-ce}} \textit{(Docker Community Edition)}
     \begin{enumerate}[label=\roman*\textasciitilde]
       \item Use \term{sudo apt install docker.io} to install \texttt{docker} on the server\\
-      \textcolor{nicer-blue}{[Figure~\ref{fig:IY2D502-2019-02-21-23-29-41}]}
+      \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-23-29-41}]}
     \end{enumerate}
   \item Set up a containerised MySQL instance using docker
     \begin{enumerate}[label=\roman*\textasciitilde]
-      \item run \term{./start\_mysql.sh} \todo{include listing here}
+      \item To start a MySQL container for the first time, run the \texttt{salapp/start\_mysql.sh} script \textit{(shown in Listing~\ref{lst:meth:start_mysql_sh})} with:\\
+        \term{sudo ./start\_mysql.sh}\\
+        This script will \term{run} a docker container:
+        \begin{itemize}
+          \item \term{--name mysql} -- named \texttt{mysql}
+          \item \term{-d} -- detached it so that it runs in the background
+          \item \term{-e} -- with environment variables to configure a random root password, create a database for the web application, and create a user with a password for the web application
+          \item from the \texttt{mysql/mysql-server:latest}\footnote{\href{https://hub.docker.com/\_/mysql}{Docker Hub: MySQL}} image on Docker Hub\footnote{\href{https://docs.docker.com/docker-hub/repos/}{Docker Docs: Docker Hub Repositories}}
+        \end{itemize}
+        \begin{listing}[H]
+          \begin{minted}[fontsize=\small,breakanywhere]{bash}
+          docker run --name mysql -d -e MYSQL_RANDOM_ROOT_PASSWORD=yes -e MYSQL_DATABASE=salapp -e MYSQL_USER=salapp -e MYSQL_PASSWORD=debugpw54321 mysql/mysql-server:latest
+          \end{minted}
+          \caption{\texttt{salapp/start\_mysql.sh}}
+          \label{lst:meth:start_mysql_sh}
+        \end{listing}
     \end{enumerate}
-  \item Deploy salapp with docker
+  \item Deploy \texttt{salapp} with docker
     \begin{enumerate}[label=\roman*\textasciitilde~]
       \item build container with \term{./make\_salapp.sh} \todo{include listings here}
       \item start salapp with \term{./start\_salapp.sh} \todo{include listings here}
