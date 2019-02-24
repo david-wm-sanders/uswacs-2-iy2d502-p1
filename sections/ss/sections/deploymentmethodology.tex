@@ -80,7 +80,7 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
               \item \term{EXPOSE} ports externally to the container
               \item Make \texttt{salapp/boot.sh} the \term{ENTRYPOINT} of the container
             \end{enumerate}
-          \item Having a \texttt{boot.sh} \textit{(show in Listing~\ref{lst:meth:boot_sh})} that defines how the container starts -- in this case:
+          \item Having a \texttt{boot.sh} \textit{(shown in Listing~\ref{lst:meth:boot_sh})} that defines how the container starts -- in this case:
             \begin{enumerate}[label=\textcolor{deep-gray}{\roman*\textasciitilde}]
               \item Activating the virtual environment \textit{(which will add the path to ./venv/bin/ to the PATH)}
               \item Running \term{flash db upgrade} to perform any initial table creation or existing database version migrations
