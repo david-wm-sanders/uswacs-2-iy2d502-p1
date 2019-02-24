@@ -5,26 +5,26 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
   \item Set up Ubuntu Server 18.10 \footnote{\href{http://releases.ubuntu.com/18.10/ubuntu-18.10-live-server-amd64.iso}{\texttt{ubuntu-18.10-live-server-amd64.iso}}} using the Subiquity\footnote{\href{https://github.com/CanonicalLtd/subiquity}{\faGithub\ CanonicalLtd/subiquity}} installer
     \begin{enumerate}[label=\roman*~\textcolor{light-gray}{|}]
       \item Select \textit{Install Ubuntu Server} at the GRUB2 boot menu\\
-      \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-19-15-19}]}
+      \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-15-19}]}}
       \item For standard UK keyboards, set the layout and variant to \textit{English {UK}} and \textit{English (UK, extended, with Win keys)} respectively -- this will help to ensure that passwords are entered correctly\\
-      \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-03}]}
+      \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-03}]}}
       \item Select \textit{Install Ubuntu} for a normal server deployment \todo{talk a bit about MAAS alternative here}\\
-      \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-06}]}
+      \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-06}]}}
       \item Choose to set up Logical Volume Management \textit{(LVM)} when prompted to configure filesystem setup\\
-      \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-38}]}
+      \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-38}]}}
       \item Confirm the default LVM filesystem configuration provided by the installer \todo{note how logical volumes could be adjusted to have separate /tmp, /var for logs, etc partitions (with nodev,noexec,etc) for improved security [IY2D502-2019-02-21-19-16-43.png]}\\
-      \textcolor{deep-gray}{[\textit{Figure~\ref{fig:IY2D502-2019-02-21-19-16-43}}]}
+      \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-43}]}}
       \item Configure the server by providing a name, server name \textit{(hostname)}, username, password -- it is also possible to import SSH identities from GitHub, as exhibited in the screenshot, and thus configure immediate secure access over SSH with public-private key authentication\\
-      \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-19-17-27}]}
+      \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-17-27}]}}
       \item Review and choose snaps for install \textit{(this allows the server to be quickly provisioned)} -- select nothing here as Docker will be installed manually later in this methodology\\
-      \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-19-17-58}]}
+      \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-17-58}]}}
       \item Reboot when prompted to finish the installation
       \item Upon logging into the new server install, check for updates and upgrade if required -- on Ubuntu, this is done with \texttt{apt} using the commands:
         \begin{itemize}
           \item \term{sudo apt update}
           \item \term{sudo apt upgrade}
         \end{itemize}
-      \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-19-22-44}]}
+      \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-22-44}]}}
     \end{enumerate}
   \item Download latest \texttt{salapp}
     \begin{enumerate}[label=\roman*~\textcolor{light-gray}{|}]
@@ -34,7 +34,7 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
   \item Install \texttt{docker-ce}\footnote{\href{https://github.com/docker/docker-ce}{\faGithub\ docker/docker-ce}} \textit{(Docker Community Edition)}
     \begin{enumerate}[label=\roman*~\textcolor{light-gray}{|}]
       \item Use \term{sudo apt install docker.io} to install \texttt{docker} on the server\\
-      \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-23-29-41}]}
+      \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-23-29-41}]}}
     \end{enumerate}
   \item Set up a containerised MySQL instance using docker
     \begin{enumerate}[label=\roman*~\textcolor{light-gray}{|}]
