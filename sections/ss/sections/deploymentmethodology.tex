@@ -110,7 +110,26 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
           \caption{\texttt{salapp/Dockerfile}}
           \label{lst:meth:Dockerfile}
         \end{listing}
-      \item start salapp with \term{./start\_salapp.sh} \todo{include listings here}
+      \pagebreak
+      \item Start a containerised docker instance of \texttt{salapp} with the \texttt{salapp/start\_salapp.sh} script \textit{(shown in Listing~\ref{lst:meth:start_salapp_sh})} with:\\
+        \term{sudo ./start\_salapp.sh secret\_key recaptcha\_public\_key recaptcha\_private\_key}\\
+        This script will \term{run} a docker container:
+        \begin{itemize}
+          \item \term{--name salapp}: named \texttt{salapp}
+          \item \term{-d}: detached so that it runs in the background
+          \item \term{-p external\_port:container\_port}: with traffic to \texttt{host:external\_port} forwarded to \texttt{container:internal\_port}
+          \item \term{-e}: with environment variables to set the Flask app secret key, reCAPTCHA public key, and reCAPTCHA private key
+          \item \term{--link mysql:dbserver}: with a link so that the container named \texttt{mysql} is visible to this container at hostname \texttt{dbserver}
+          \item \term{DATABASE\_URI=mysql+pymysql://salapp:debugpw54321@dbserver/salapp}:\\
+            connecting as \term{salapp:password} to the MySQL container \term{@dbserver} and using the \term{/salapp} database
+          \item from the \texttt{salapp:latest} that was created by \hyperref[lst:meth:make_salapp_sh]{\texttt{salapp/make\_salapp.sh}}
+        \end{itemize}
+        \begin{listing}[H]
+          \captionsetup{skip=\skiplistingcaptionlen}
+          \inputminted[breakanywhere]{bash}{../uswacs-2-iy2d502-salapp/start_salapp.sh}
+          \caption{\texttt{salapp/start\_salapp.sh}}
+          \label{lst:meth:start_salapp_sh}
+        \end{listing}
     \end{enumerate}
   \pagebreak
   \item \todo{Connect to web application and trigger shit}
