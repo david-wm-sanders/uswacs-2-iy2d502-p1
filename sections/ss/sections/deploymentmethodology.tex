@@ -3,7 +3,7 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
 
 \begin{enumerate}[leftmargin=0em,label=\protect\listlabelcircle{\arabic*}]
   \item Set up Ubuntu Server 18.10 \footnote{\href{http://releases.ubuntu.com/18.10/ubuntu-18.10-live-server-amd64.iso}{\texttt{ubuntu-18.10-live-server-amd64.iso}}} using the Subiquity\footnote{\href{https://github.com/CanonicalLtd/subiquity}{\faGithub\ CanonicalLtd/subiquity}} installer
-    \begin{enumerate}[label=\roman*\textasciitilde]
+    \begin{enumerate}[label=\roman*~\textcolor{light-gray}{|}]
       \item Select \textit{Install Ubuntu Server} at the GRUB2 boot menu\\
       \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-19-15-19}]}
       \item For standard UK keyboards, set the layout and variant to \textit{English {UK}} and \textit{English (UK, extended, with Win keys)} respectively -- this will help to ensure that passwords are entered correctly\\
@@ -27,17 +27,17 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
       \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-19-22-44}]}
     \end{enumerate}
   \item Download latest \texttt{salapp}
-    \begin{enumerate}[label=\roman*\textasciitilde]
+    \begin{enumerate}[label=\roman*~\textcolor{light-gray}{|}]
       \item Clone \texttt{salapp} from \href{https://github.com/david-wm-sanders/uswacs-2-iy2d502-salapp}{\faGithub\ david-wm-sanders/uswacs-2-iy2d502-salapp} using:\\
       \term{git clone git@github.com:david-wm-sanders/uswacs-2-iy2d502-salapp.git}
     \end{enumerate}
   \item Install \texttt{docker-ce}\footnote{\href{https://github.com/docker/docker-ce}{\faGithub\ docker/docker-ce}} \textit{(Docker Community Edition)}
-    \begin{enumerate}[label=\roman*\textasciitilde]
+    \begin{enumerate}[label=\roman*~\textcolor{light-gray}{|}]
       \item Use \term{sudo apt install docker.io} to install \texttt{docker} on the server\\
       \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-23-29-41}]}
     \end{enumerate}
   \item Set up a containerised MySQL instance using docker
-    \begin{enumerate}[label=\roman*\textasciitilde]
+    \begin{enumerate}[label=\roman*~\textcolor{light-gray}{|}]
       \item To start a MySQL container for the first time, run the \texttt{salapp/start\_mysql.sh} script \textit{(shown in Listing~\ref{lst:meth:start_mysql_sh})} with \term{sudo ./start\_mysql.sh}\\
         This script will \term{run} a docker container:
         \begin{itemize}
@@ -54,7 +54,7 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
         \end{listing}
     \end{enumerate}
   \item Deploy \texttt{salapp} with docker
-    \begin{enumerate}[label=\roman*\textasciitilde~]
+    \begin{enumerate}[label=\roman*~\textcolor{light-gray}{|}]
       \item To build the \texttt{salapp} container from the \texttt{Dockerfile} run the \texttt{salapp/make\_salapp.sh} script with \term{sudo ./make\_salapp.sh}\\
         This will:
         \begin{itemize}
