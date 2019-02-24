@@ -16,7 +16,7 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
       \textcolor{deep-gray}{[\textit{Figure~\ref{fig:IY2D502-2019-02-21-19-16-43}}]}
       \item Configure the server by providing a name, server name \textit{(hostname)}, username, password -- it is also possible to import SSH identities from GitHub, as exhibited in the screenshot, and thus configure immediate secure access over SSH with public-private key authentication\\
       \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-19-17-27}]}
-      \item Review and chose snaps for install \textit{(this allows the server to be quickly provisioned)} -- select nothing here as Docker will be installed manually later in this methodology\\
+      \item Review and choose snaps for install \textit{(this allows the server to be quickly provisioned)} -- select nothing here as Docker will be installed manually later in this methodology\\
       \textcolor{deep-gray}{[Figure~\ref{fig:IY2D502-2019-02-21-19-17-58}]}
       \item Reboot when prompted to finish the installation
       \item Upon logging into the new server install, check for updates and upgrade if required -- on Ubuntu, this is done with \texttt{apt} using the commands:
@@ -42,21 +42,28 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
         This script will \term{run} a docker container:
         \begin{itemize}
           \item \term{--name mysql} -- named \texttt{mysql}
-          \item \term{-d} -- detached it so that it runs in the background
+          \item \term{-d} -- detached so that it runs in the background
           \item \term{-e} -- with environment variables to configure a random root password, create a database for the web application, and create a user with a password for the web application
           \item from the \texttt{mysql/mysql-server:latest}\footnote{\href{https://hub.docker.com/\_/mysql}{Docker Hub: MySQL}} image on Docker Hub\footnote{\href{https://docs.docker.com/docker-hub/repos/}{Docker Docs: Docker Hub Repositories}}
         \end{itemize}
         \begin{listing}[H]
-          \begin{minted}[fontsize=\small,breakanywhere]{bash}
-          docker run --name mysql -d -e MYSQL_RANDOM_ROOT_PASSWORD=yes -e MYSQL_DATABASE=salapp -e MYSQL_USER=salapp -e MYSQL_PASSWORD=debugpw54321 mysql/mysql-server:latest
-          \end{minted}
+          \inputminted[fontsize=\small,breakanywhere]{bash}{../uswacs-2-iy2d502-salapp/start_mysql.sh}
           \caption{\texttt{salapp/start\_mysql.sh}}
           \label{lst:meth:start_mysql_sh}
         \end{listing}
     \end{enumerate}
   \item Deploy \texttt{salapp} with docker
     \begin{enumerate}[label=\roman*\textasciitilde~]
-      \item build container with \term{./make\_salapp.sh} \todo{include listings here}
+      \item To build the \texttt{salapp} container from the \texttt{Dockerfile} run the \texttt{salapp/make\_salapp.sh} script with \term{sudo ./make\_salapp.sh}\\
+        This will:
+        \begin{itemize}
+          \item a
+        \end{itemize}
+        \begin{listing}[H]
+          \inputminted[fontsize=\small,breakanywhere]{bash}{../uswacs-2-iy2d502-salapp/make_salapp.sh}
+          \caption{\texttt{salapp/make\_salapp.sh}}
+          \label{lst:meth:make_salapp_sh}
+        \end{listing}
       \item start salapp with \term{./start\_salapp.sh} \todo{include listings here}
     \end{enumerate}
   \item \todo{Connect to web application and trigger shit}
