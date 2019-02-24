@@ -12,7 +12,7 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
       \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-06}]}}
       \item Choose to set up Logical Volume Management \textit{(LVM)} when prompted to configure filesystem setup\\
       \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-38}]}}
-      \item Confirm the default LVM filesystem configuration provided by the installer -- in order to increase security it would be possible, at this stage, to set up LVM with LUKS\footnote{\href{https://gitlab.com/cryptsetup/cryptsetup/}{\faGitlab\ cryptsetup/cryptsetup/}} full-disk-encryption and configure separate partitions for \texttt{/tmp} and \texttt{/var} so that they could have size limitations and be mounted with options like \term{noexec} \textit{(to prevent the executable of binaries on a partition where user uploaded data is stored)}\\
+      \item Confirm the default LVM filesystem configuration provided by the installer -- in order to increase security it would be possible, at this stage, to set up LVM with LUKS\footnote{\href{https://gitlab.com/cryptsetup/cryptsetup/}{\faGitlab\ cryptsetup/cryptsetup/}} full-disk-encryption and configure separate partitions for \texttt{/tmp} and \texttt{/var} so that they could have size limitations and be mounted with options like \term{noexec} \textit{(to prevent the execution of binaries on a partition where user uploaded data is stored)}\\
       \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-43}]}}
       \item Configure the server by providing a name, server name \textit{(hostname)}, username, password -- it is also possible to import SSH identities from GitHub, as exhibited in the screenshot, and thus configure immediate secure access over SSH with public-private key authentication\\
       \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-17-27}]}}
@@ -45,7 +45,7 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
           \item \term{--name mysql}: named \texttt{mysql}
           \item \term{-d}: detached so that it runs in the background
           \item \term{-e}: with environment variables to configure a random root password, create a database for the web application, and create a user with a password for the web application
-          \item from the \texttt{mysql/mysql-server:latest}\footnote{\href{https://hub.docker.com/\_/mysql}{Docker Hub: MySQL}} image on Docker Hub\footnote{\href{https://docs.docker.com/docker-hub/repos/}{Docker Docs: Docker Hub Repositories}}
+          \item from the \texttt{mysql/mysql-server:latest}\footnote{\href{https://hub.docker.com/r/mysql/mysql-server/}{Docker Hub: MySQL/mysql-server}} image on Docker Hub\footnote{\href{https://docs.docker.com/docker-hub/repos/}{Docker Docs: Docker Hub Repositories}}
         \end{itemize}
         \begin{listing}[H]
           \captionsetup{skip=\skiplistingcaptionlen}
