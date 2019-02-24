@@ -80,7 +80,17 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
               \item \term{EXPOSE} ports externally to the container
               \item Make \texttt{salapp/boot.sh} the \term{ENTRYPOINT} of the container
             \end{enumerate}
-          \item \todo{having a boot.sh}
+          \item Having a \texttt{boot.sh} \textit{(show in Listing~\ref{lst:meth:boot_sh})} that defines how the container starts -- in this case:
+            \begin{enumerate}[label=\textcolor{deep-gray}{\roman*\textasciitilde}]
+              \item Activating the virtual environment \textit{(which will add the path to ./venv/bin/ to the PATH)}
+              \item Running \term{flash db upgrade} to perform any initial table creation or existing database version migrations
+              \item Executing \texttt{gunicorn} with:
+                \begin{itemize}
+                  \item \term{-b :5000}: to bind the server to port 5000
+                  \item \term{--access-logfile - --error-logfile -}: to write access and error logfiles to standard output so docker can log it
+                  \item \term{salapp:app}: to set the Flask app instance in salapp as the logic
+                \end{itemize}
+            \end{enumerate}
         \end{itemize}
         \begin{listing}[H]
           \captionsetup{skip=\skiplistingcaptionlen}
@@ -90,15 +100,15 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
         \end{listing}
         \begin{listing}[H]
           \captionsetup{skip=\skiplistingcaptionlen}
-          \inputminted[breakanywhere]{bash}{../uswacs-2-iy2d502-salapp/Dockerfile}
-          \caption{\texttt{salapp/Dockerfile}}
-          \label{lst:meth:Dockerfile}
-        \end{listing}
-        \begin{listing}[H]
-          \captionsetup{skip=\skiplistingcaptionlen}
           \inputminted[breakanywhere]{bash}{../uswacs-2-iy2d502-salapp/boot.sh}
           \caption{\texttt{salapp/boot.sh}}
           \label{lst:meth:boot_sh}
+        \end{listing}
+        \begin{listing}[H]
+          \captionsetup{skip=\skiplistingcaptionlen}
+          \inputminted[breakanywhere]{bash}{../uswacs-2-iy2d502-salapp/Dockerfile}
+          \caption{\texttt{salapp/Dockerfile}}
+          \label{lst:meth:Dockerfile}
         \end{listing}
       \item start salapp with \term{./start\_salapp.sh} \todo{include listings here}
     \end{enumerate}
