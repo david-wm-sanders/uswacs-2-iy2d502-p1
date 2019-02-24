@@ -92,14 +92,9 @@ if __name__ == '__main__':
                 tf.write(f"\\subsection{{\\texttt{{{f_name_ltx}}}}}\n")
                 # Begin a codelisting env
                 tf.write("\\begin{codelisting}\n")
-                # Begin a minted env
+                # Write an inputminted directive so that source code changes are tracked on report recompilation
                 lexer = ext_lint_map.get(f.suffix, "text")
-                tf.write(f"\\begin{{minted}}[fontsize=\\small,breakanywhere]{{{lexer}}}\n")
-                # Insert file contents
-                tf.write(f.read_text(encoding="utf-8"))
-                # tf.write("\n")
-                # Close minted env
-                tf.write("\\end{minted}\n")
+                tf.write(f"\\inputminted[breakanywhere]{{{lexer}}}{{{'/'.join(f.parts)}}}")
                 # Close codelisting env
                 tf.write("\\end{codelisting}\n")
                 # Insert pagebreak

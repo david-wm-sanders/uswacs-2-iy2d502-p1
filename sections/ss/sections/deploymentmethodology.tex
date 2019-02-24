@@ -47,7 +47,8 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
           \item from the \texttt{mysql/mysql-server:latest}\footnote{\href{https://hub.docker.com/\_/mysql}{Docker Hub: MySQL}} image on Docker Hub\footnote{\href{https://docs.docker.com/docker-hub/repos/}{Docker Docs: Docker Hub Repositories}}
         \end{itemize}
         \begin{listing}[H]
-          \inputminted[fontsize=\small,breakanywhere]{bash}{../uswacs-2-iy2d502-salapp/start_mysql.sh}
+          \captionsetup{skip=\skiplistingcaptionlen}
+          \inputminted[breakanywhere]{bash}{../uswacs-2-iy2d502-salapp/start_mysql.sh}
           \caption{\texttt{salapp/start\_mysql.sh}}
           \label{lst:meth:start_mysql_sh}
         \end{listing}
@@ -60,9 +61,22 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
           \item a
         \end{itemize}
         \begin{listing}[H]
-          \inputminted[fontsize=\small,breakanywhere]{bash}{../uswacs-2-iy2d502-salapp/make_salapp.sh}
+          \captionsetup{skip=\skiplistingcaptionlen}
+          \inputminted[breakanywhere]{bash}{../uswacs-2-iy2d502-salapp/make_salapp.sh}
           \caption{\texttt{salapp/make\_salapp.sh}}
           \label{lst:meth:make_salapp_sh}
+        \end{listing}
+        \begin{listing}[H]
+          \captionsetup{skip=\skiplistingcaptionlen}
+          \inputminted[breakanywhere]{bash}{../uswacs-2-iy2d502-salapp/Dockerfile}
+          \caption{\texttt{salapp/Dockerfile}}
+          \label{lst:meth:Dockerfile}
+        \end{listing}
+        \begin{listing}[H]
+          \captionsetup{skip=\skiplistingcaptionlen}
+          \inputminted[breakanywhere]{bash}{../uswacs-2-iy2d502-salapp/boot.sh}
+          \caption{\texttt{salapp/boot.sh}}
+          \label{lst:meth:boot_sh}
         \end{listing}
       \item start salapp with \term{./start\_salapp.sh} \todo{include listings here}
     \end{enumerate}
