@@ -3,16 +3,16 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
 
 \begin{enumerate}[leftmargin=0em,label=\protect\listlabelcircle{\arabic*}]
   \item Set up Ubuntu Server 18.10 \footnote{\href{http://releases.ubuntu.com/18.10/ubuntu-18.10-live-server-amd64.iso}{\texttt{ubuntu-18.10-live-server-amd64.iso}}} using the Subiquity\footnote{\href{https://github.com/CanonicalLtd/subiquity}{\faGithub\ CanonicalLtd/subiquity}} installer
-    \begin{enumerate}[label=\roman*~\textcolor{light-gray}{|}]
+    \begin{enumerate}[label=\Roman*~\textcolor{light-gray}{|}]
       \item Select \textit{Install Ubuntu Server} at the GRUB2 boot menu\\
       \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-15-19}]}}
       \item For standard UK keyboards, set the layout and variant to \textit{English {UK}} and \textit{English (UK, extended, with Win keys)} respectively -- this will help to ensure that passwords are entered correctly\\
       \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-03}]}}
-      \item Select \textit{Install Ubuntu} for a normal server deployment \todo{talk a bit about MAAS alternative here}\\
+      \item Select \textit{Install Ubuntu} for a normal server deployment\\
       \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-06}]}}
       \item Choose to set up Logical Volume Management \textit{(LVM)} when prompted to configure filesystem setup\\
       \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-38}]}}
-      \item Confirm the default LVM filesystem configuration provided by the installer \todo{note how logical volumes could be adjusted to have separate /tmp, /var for logs, etc partitions (with nodev,noexec,etc) for improved security [IY2D502-2019-02-21-19-16-43.png]}\\
+      \item Confirm the default LVM filesystem configuration provided by the installer -- in order to increase security it would be possible, at this stage, to set up LVM with LUKS\footnote{\href{https://gitlab.com/cryptsetup/cryptsetup/}{\faGitlab\ cryptsetup/cryptsetup/}} full-disk-encryption and configure separate partitions for \texttt{/tmp} and \texttt{/var} so that they could have size limitations and be mounted with options like \term{noexec} \textit{(to prevent the executable of binaries on a partition where user uploaded data is stored)}\\
       \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-16-43}]}}
       \item Configure the server by providing a name, server name \textit{(hostname)}, username, password -- it is also possible to import SSH identities from GitHub, as exhibited in the screenshot, and thus configure immediate secure access over SSH with public-private key authentication\\
       \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-17-27}]}}
@@ -27,17 +27,17 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
       \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-22-44}]}}
     \end{enumerate}
   \item Download latest \texttt{salapp}
-    \begin{enumerate}[label=\roman*~\textcolor{light-gray}{|}]
+    \begin{enumerate}[label=\Roman*~\textcolor{light-gray}{|}]
       \item Clone \texttt{salapp} from \href{https://github.com/david-wm-sanders/uswacs-2-iy2d502-salapp}{\faGithub\ david-wm-sanders/uswacs-2-iy2d502-salapp} using:\\
       \term{git clone git@github.com:david-wm-sanders/uswacs-2-iy2d502-salapp.git}
     \end{enumerate}
   \item Install \texttt{docker-ce}\footnote{\href{https://github.com/docker/docker-ce}{\faGithub\ docker/docker-ce}} \textit{(Docker Community Edition)}
-    \begin{enumerate}[label=\roman*~\textcolor{light-gray}{|}]
+    \begin{enumerate}[label=\Roman*~\textcolor{light-gray}{|}]
       \item Use \term{sudo apt install docker.io} to install \texttt{docker} on the server\\
       \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-23-29-41}]}}
     \end{enumerate}
   \item Set up a containerised MySQL instance using docker
-    \begin{enumerate}[label=\roman*~\textcolor{light-gray}{|}]
+    \begin{enumerate}[label=\Roman*~\textcolor{light-gray}{|}]
       \item To start a MySQL container for the first time, run the \texttt{salapp/start\_mysql.sh} script \textit{(shown in Listing~\ref{lst:meth:start_mysql_sh})} with \term{sudo ./start\_mysql.sh}\\
         This script will \term{run} a docker container:
         \begin{itemize}
@@ -54,28 +54,31 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
         \end{listing}
     \end{enumerate}
   \item Deploy \texttt{salapp} with docker
-    \begin{enumerate}[label=\roman*~\textcolor{light-gray}{|}]
-      \item To build the \texttt{salapp} container from the \texttt{Dockerfile} run the \texttt{salapp/make\_salapp.sh} script \textit{(shown in Listing~\ref{lst:meth:make_salapp_sh})} with \term{sudo ./make\_salapp.sh}\\
+    \begin{enumerate}[label=\Roman*~\textcolor{light-gray}{|}]
+      \item To build the \texttt{salapp} container from the \texttt{Dockerfile}, run the \texttt{salapp/make\_salapp.sh} script \textit{(shown in Listing~\ref{lst:meth:make_salapp_sh})} with \term{sudo ./make\_salapp.sh}\\
         This process entails:
         \begin{itemize}
           \item Using \texttt{docker build} to create a new container, tagged with \term{-t salapp:latest}, from the \texttt{Dockerfile} in \term{.}
-          \item Having a \texttt{Dockerfile} \textit{(shown in Listing~\ref{lst:meth:Dockerfile})} that defines commands to:
-            \begin{enumerate}
+          \item Having a \texttt{Dockerfile} \textit{(shown in Listing~\ref{lst:meth:Dockerfile})} that defines commands that:
+            % \begin{enumerate}[label=\textcolor{light-gray}{\roman*\~}]
+            \begin{enumerate}[label=\roman*\textasciitilde]
               \item Derive the container \term{FROM} the \texttt{python:3.7-alpine} image on the Docker Hub
               \item \term{adduser} called \texttt{salapp} with a home directory
-              \item Set the \term{WORKDIR} in the container to the home directory for \texttt{salapp}
-              \item Copy \texttt{salapp/requirements.txt} \textit{(shown in Listing~\ref{fcl:salapp:requirements})} into the container
-              \item create venv
-              \item install reqs into venv
-              \item install other reqs into venv
-              \item copy in app and migrations
-              \item copy in boot.sh and make executable
-              \item envs
-              \item chown shit
-              \item become salapp
-              \item expose the gunicorn port to world outside container
-              \item set the entrypoint to be the boot.sh script
+              \item Set the \term{WORKDIR} in the container to the home directory for the \texttt{salapp} user
+              \item \term{COPY} \texttt{salapp/requirements.txt} \textit{(shown in \hyperref[fcl:salapp:requirements]{requirements.txt})} into the container
+              \item \term{RUN python -m venv venv} in order to create a virtual environment called \texttt{venv}
+              \item \term{RUN  venv/bin/pip install -r requirements.txt} in order to install the dependencies in the \texttt{venv}
+              \item \term{RUN venv/bin/pip install gunicorn pymysql} in order to install the WSGI HTTP server \texttt{gunicorn} and python library \texttt{pymysql} in the \texttt{venv}
+              \item \term{COPY} in the \texttt{salapp/app} and \texttt{salapp/migrations} directories
+              \item \term{COPY} in the \texttt{salapp/salapp.py} and \texttt{boot.sh} files
+              \item Make \texttt{boot.sh} executable with \term{RUN chmod a+x boot.sh}
+              \item Use \term{ENV} to set environment variables inside the container
+              \item Change ownership of the directories to the \texttt{salapp} user with \term{chown}
+              \item Become \term{USER salapp} for all commands after this and each time the container is started
+              \item \term{EXPOSE} ports externally to the container
+              \item Make \texttt{salapp/boot.sh} the \term{ENTRYPOINT} of the container
             \end{enumerate}
+          \item \todo{having a boot.sh}
         \end{itemize}
         \begin{listing}[H]
           \captionsetup{skip=\skiplistingcaptionlen}
