@@ -26,6 +26,7 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
         \end{itemize}
       \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-22-44}]}}
     \end{enumerate}
+  \pagebreak
   \item Download latest \texttt{salapp}
     \begin{enumerate}[label=\Roman*~\textcolor{light-gray}{|}]
       \item Clone \texttt{salapp} from \href{https://github.com/david-wm-sanders/uswacs-2-iy2d502-salapp}{\faGithub\ david-wm-sanders/uswacs-2-iy2d502-salapp} using:\\
@@ -53,6 +54,7 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
           \label{lst:meth:start_mysql_sh}
         \end{listing}
     \end{enumerate}
+  \pagebreak
   \item Deploy \texttt{salapp} with docker
     \begin{enumerate}[label=\Roman*~\textcolor{light-gray}{|}]
       \item To build the \texttt{salapp} container from the \texttt{Dockerfile}, run the \texttt{salapp/make\_salapp.sh} script \textit{(shown in Listing~\ref{lst:meth:make_salapp_sh})} with \term{sudo ./make\_salapp.sh}\\
@@ -100,6 +102,7 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
         \end{listing}
       \item start salapp with \term{./start\_salapp.sh} \todo{include listings here}
     \end{enumerate}
+  \pagebreak
   \item \todo{Connect to web application and trigger shit}
   \item \todo{Show how \texttt{mysql\_root\_login.sh} and \texttt{mysql\_salapp\_login.sh} can be used to check that the quotes were entered into the db correctly}
   \item \todo{Create a script to view the security alert logs and demonstrate with evidence}
