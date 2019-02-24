@@ -61,7 +61,7 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
           \item Using \texttt{docker build} to create a new container, tagged with \term{-t salapp:latest}, from the \texttt{Dockerfile} in \term{.}
           \item Having a \texttt{Dockerfile} \textit{(shown in Listing~\ref{lst:meth:Dockerfile})} that defines commands that:
             % \begin{enumerate}[label=\textcolor{light-gray}{\roman*\~}]
-            \begin{enumerate}[label=\roman*\textasciitilde]
+            \begin{enumerate}[label=\textcolor{deep-gray}{\roman*\textasciitilde}]
               \item Derive the new container \term{FROM} the \texttt{python:3.7-alpine} image
               \item \term{adduser} called \texttt{salapp} with a home directory
               \item Set the \term{WORKDIR} in the container to the home directory for the \texttt{salapp} user
