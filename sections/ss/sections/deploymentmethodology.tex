@@ -41,9 +41,9 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
       \item To start a MySQL container for the first time, run the \texttt{salapp/start\_mysql.sh} script \textit{(shown in Listing~\ref{lst:meth:start_mysql_sh})} with \term{sudo ./start\_mysql.sh}\\
         This script will \term{run} a docker container:
         \begin{itemize}
-          \item \term{--name mysql} -- named \texttt{mysql}
-          \item \term{-d} -- detached so that it runs in the background
-          \item \term{-e} -- with environment variables to configure a random root password, create a database for the web application, and create a user with a password for the web application
+          \item \term{--name mysql}: named \texttt{mysql}
+          \item \term{-d}: detached so that it runs in the background
+          \item \term{-e}: with environment variables to configure a random root password, create a database for the web application, and create a user with a password for the web application
           \item from the \texttt{mysql/mysql-server:latest}\footnote{\href{https://hub.docker.com/\_/mysql}{Docker Hub: MySQL}} image on Docker Hub\footnote{\href{https://docs.docker.com/docker-hub/repos/}{Docker Docs: Docker Hub Repositories}}
         \end{itemize}
         \begin{listing}[H]
@@ -55,10 +55,27 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
     \end{enumerate}
   \item Deploy \texttt{salapp} with docker
     \begin{enumerate}[label=\roman*~\textcolor{light-gray}{|}]
-      \item To build the \texttt{salapp} container from the \texttt{Dockerfile} run the \texttt{salapp/make\_salapp.sh} script with \term{sudo ./make\_salapp.sh}\\
-        This will:
+      \item To build the \texttt{salapp} container from the \texttt{Dockerfile} run the \texttt{salapp/make\_salapp.sh} script \textit{(shown in Listing~\ref{lst:meth:make_salapp_sh})} with \term{sudo ./make\_salapp.sh}\\
+        This process entails:
         \begin{itemize}
-          \item a
+          \item Using \texttt{docker build} to create a new container, tagged with \term{-t salapp:latest}, from the \texttt{Dockerfile} in \term{.}
+          \item Having a \texttt{Dockerfile} \textit{(shown in Listing~\ref{lst:meth:Dockerfile})} that defines commands to:
+            \begin{enumerate}
+              \item Derive the container \term{FROM} the \texttt{python:3.7-alpine} image on the Docker Hub
+              \item \term{adduser} called \texttt{salapp} with a home directory
+              \item Set the \term{WORKDIR} in the container to the home directory for \texttt{salapp}
+              \item Copy \texttt{salapp/requirements.txt} \textit{(shown in Listing~\ref{fcl:salapp:requirements})} into the container
+              \item create venv
+              \item install reqs into venv
+              \item install other reqs into venv
+              \item copy in app and migrations
+              \item copy in boot.sh and make executable
+              \item envs
+              \item chown shit
+              \item become salapp
+              \item expose the gunicorn port to world outside container
+              \item set the entrypoint to be the boot.sh script
+            \end{enumerate}
         \end{itemize}
         \begin{listing}[H]
           \captionsetup{skip=\skiplistingcaptionlen}
