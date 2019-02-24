@@ -47,6 +47,7 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
           \item \term{-e}: with environment variables to configure a random root password, create a database for the web application, and create a user with a password for the web application
           \item from the \texttt{mysql/mysql-server:latest}\footnote{\href{https://hub.docker.com/r/mysql/mysql-server/}{Docker Hub: MySQL/mysql-server}} image on Docker Hub\footnote{\href{https://docs.docker.com/docker-hub/repos/}{Docker Docs: Docker Hub Repositories}}
         \end{itemize}
+        \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-22-00-58-41}]}}
         \begin{listing}[H]
           \captionsetup{skip=\skiplistingcaptionlen}
           \inputminted[breakanywhere]{bash}{../uswacs-2-iy2d502-salapp/start_mysql.sh}
@@ -58,6 +59,7 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
   \item Deploy \texttt{salapp} with docker
     \begin{enumerate}[label=\Roman*~\textcolor{light-gray}{|}]
       \item To build the \texttt{salapp} container from the \texttt{Dockerfile}, run the \texttt{salapp/make\_salapp.sh} script \textit{(shown in Listing~\ref{lst:meth:make_salapp_sh})} with \term{sudo ./make\_salapp.sh}\\
+        \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-23-43-07}]}}\\
         This process entails:
         \begin{itemize}
           \item Using \texttt{docker build} to create a new container, tagged with \term{-t salapp:latest}, from the \texttt{Dockerfile} in \term{.}
@@ -113,6 +115,7 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
       \pagebreak
       \item Start a containerised docker instance of \texttt{salapp} with the \texttt{salapp/start\_salapp.sh} script \textit{(shown in Listing~\ref{lst:meth:start_salapp_sh})} with:\\
         \term{sudo ./start\_salapp.sh secret\_key recaptcha\_public\_key recaptcha\_private\_key}\\
+        \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-22-03-02-25}]}}\\
         This script will \term{run} a docker container:
         \begin{itemize}
           \item \term{--name salapp}: named \texttt{salapp}
