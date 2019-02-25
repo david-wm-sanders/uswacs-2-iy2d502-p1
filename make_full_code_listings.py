@@ -92,6 +92,9 @@ if __name__ == '__main__':
                 tf.write(f"\\subsection{{\\texttt{{{f_name_ltx}}}}}\n")
                 # Begin a codelisting env
                 tf.write("\\begin{codelisting}\n")
+                # Write a label
+                label_id = f"fcl:{root_dir.name}:{f.name}"
+                tf.write(f"\\label{{{label_id}}}\n")
                 # Write an inputminted directive so that source code changes are tracked on report recompilation
                 lexer = ext_lint_map.get(f.suffix, "text")
                 tf.write(f"\\inputminted[breakanywhere]{{{lexer}}}{{{'/'.join(f.parts)}}}")

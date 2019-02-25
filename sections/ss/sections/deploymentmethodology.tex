@@ -69,7 +69,7 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
               \item Derive the new container \term{FROM} the \texttt{python:3.7-alpine} image
               \item \term{adduser} called \texttt{salapp} with a home directory
               \item Set the \term{WORKDIR} in the container to the home directory for the \texttt{salapp} user
-              \item \term{COPY} \texttt{salapp/requirements.txt} \textit{(shown in \hyperref[fcl:salapp:requirements]{requirements.txt})} into the container
+              \item \term{COPY} \texttt{salapp/requirements.txt} \textit{(shown in \hyperref[fcl:uswacs-2-iy2d502-salapp:requirements.txt]{requirements.txt})} into the container
               \item \term{RUN python -m venv venv} in order to create a virtual environment called \texttt{venv}
               \item \term{RUN  venv/bin/pip install -r requirements.txt} in order to install the dependencies in the \texttt{venv}
               \item \term{RUN venv/bin/pip install gunicorn pymysql} in order to install \texttt{gunicorn} \textit{(a WSGI HTTP server)} and python library \texttt{pymysql} in the \texttt{venv}
