@@ -1,8 +1,40 @@
 \section{Hardening}
 \todo{Hardening intro...}
 
-\pagebreak
+% \pagebreak
 \subsection{Ubuntu 18.10 Server: \texttt{salsrv}}
+% \subsubsection*{Logical Volume Management}
+% \paragraph{Partitioning}
+% As discussed in the methodology, and although beyond the scope of this report, it would be possible to use Logical Volume Management to define a more resilient partitioning scheme on disk.
+%
+% This could include having separate paritions for \texttt{/tmp} and \texttt{/var}. In the case of \texttt{/tmp}, benefit would be gained by mounting the drive with \texttt{noexec} if the server was storing user uploaded data in the \texttt{/tmp} partition.
+%
+% Having separate partitions also increases the resilience of the system by preventing logs, written to \texttt{/var/log} for example, from filing the drive completely and disrupting the operation of the \texttt{/} partition. An attacker could attempt to trigger events that cause logs to be written in order to fill server drives and cause a Denial-of-Service.
+%
+% In light of this, the use of more finessed partitioning schemes can help to ensure that the integrity and availability of data and the server itself is maintained.
+%
+% \paragraph{Encryption}
+% Fully encrypting drives with LUKS would improve confidentiality significantly
+% \subsubsection{User Accounts}
+% Locking them down more?
+\subsubsection{Locking down SSH via \texttt{/etc/ssh/sshd\_config}}
+In order to prevent unauthorised remote access via SSH to the server, several steps should be taken to improve the security of the SSH server configuration. This will increase the confidentiality of data on the server \textit{(by further restricting access to the server)} whilst also maintaining integrity and availability for authenticated users.
+
+An element of improving the SSH configuration was performed during the installation by importing SSH identities from GitHub. This allows the user who controls the private keys of those identities to connect to the server out-of-the-gate with public-private key authentication rather than password authentication for SSH connections.
+
+Further harden the SSH server by modifying the configuration in \texttt{/etc/ssh/sshd\_config} \textit{(as shown in Figure~\ref{fig:IY2D502-2019-02-26-17-44-30})}. This involves:
+\begin{itemize}
+  \item Preventing remote login over SSH to the \texttt{root} account by setting:\\
+    \term{PermitRootLogin no}
+  \item Setting \term{PasswordAuthentication no} to prevent password authentication for all incoming SSH connections to all accounts completely -- this can be done without worry if the \texttt{authorized\_keys} imported from GitHub during the installation work successfully
+\end{itemize}
+
+\subsubsection{Firewall}
+configuring ufw so that only ssh, http, https are permitted inbound
+\subsubsection{Patch Management}
+ensuring that patching via apt upgrade is performed regularly
+% \subsubsection*{Anti-Malware: \texttt{rkhunter?}}
+
 
 \pagebreak
 \subsection{Flask application: \texttt{salapp}}
