@@ -18,6 +18,15 @@
 % \subsubsection{User Accounts}
 % Locking them down more?
 \subsubsection{Locking down SSH via \texttt{/etc/ssh/sshd\_config}}
+% https://medium.com/@jasonrigden/hardening-ssh-1bcb99cd4cef
+% https://linux-audit.com/audit-and-harden-your-ssh-configuration/
+% https://www.cyberciti.biz/tips/linux-unix-bsd-openssh-server-best-practices.html
+% https://github.com/BetterCrypto/Applied-Crypto-Hardening/blob/master/src/configuration/SSH/OpenSSH/6.6/sshd_config
+% https://gist.github.com/tribou/fcda8e6066776c9eaa47 (with added TORHS goodies...)
+% https://security.stackexchange.com/questions/179114/what-are-the-toughest-ssh-daemon-settings-in-terms-of-encryption-handshake-or
+% https://security.stackexchange.com/questions/154076/hardening-ssh-security-on-a-debian-9-server
+% https://infosec.mozilla.org/guidelines/openssh (taking it to the next level!)
+
 In order to prevent unauthorised remote access via SSH to the server, several steps should be taken to improve the security of the SSH server configuration. This will increase the confidentiality of data on the server \textit{(by further restricting access to the server)} whilst also maintaining integrity and availability for authenticated users.
 
 An element of improving the SSH configuration was performed during the installation by importing SSH identities from GitHub. This allows the user who controls the private keys of those identities to connect to the server out-of-the-gate with public-private key authentication rather than password authentication for SSH connections.
