@@ -3,6 +3,7 @@
 
 % \pagebreak
 \subsection{Ubuntu 18.10 Server: \texttt{salsrv}}
+\todo{some text here pls}
 % \subsubsection*{Logical Volume Management}
 % \paragraph{Partitioning}
 % As discussed in the methodology, and although beyond the scope of this report, it would be possible to use Logical Volume Management to define a more resilient partitioning scheme on disk.
@@ -39,7 +40,23 @@ Further harden the SSH server by modifying the configuration in \texttt{/etc/ssh
 \end{itemize}
 
 \subsubsection{Setting up a Firewall}
-configuring ufw so that only ssh, http, https are permitted inbound
+A firewall can be used to drop all traffic to ports not explicitly allowed to receive incoming traffic -- this effectively closes the port to the outside world.
+
+On Ubuntu, firewall configuration can be performed with the \texttt{ufw} tool \textit{(as shown in Figure~\ref{fig:IY2D502-2019-02-26-19-28-12})}.
+
+This involves:
+\begin{itemize}
+  \item Starting the firewall with \term{sudo ufw enable}
+  \item Adding allow rules with:
+    \begin{itemize}
+      \item \term{sudo ufw allow ssh}: will allow inbound traffic on port 22
+      \item \term{sudo ufw allow http}: will allow inbound traffic on port 80
+      \item \term{sudo ufw allow https}: will allow inbound traffic on port 443
+    \end{itemize}
+  \item Checking that the firewall is active and configured correctly using:\\
+    \term{sudo ufw status}
+\end{itemize}
+
 \subsubsection{Ensuring that the system in upgraded}
 Ensure that the server is patched regularly \textit{(as shown in Figures~\ref{fig:IY2D502-2019-02-22-23-41-29}~and~\ref{fig:IY2D502-2019-02-22-23-44-52})}. Security vulnerabilities in system packages could expose the server to exploits that compromise confidentiality, integrity, and/or availability.
 
@@ -47,7 +64,30 @@ During upgrading it is possible to ascertain the changes \textit{(some of which 
 \href{https://launchpad.net/ubuntu/+source/bind9/1:9.11.4+dfsg-3ubuntu5.1}{\texttt{https://launchpad.net/ubuntu/+source/<package>/<version}}.
 
 In this changelog, we can see that several security fixes were made by patching the source code for \texttt{bind9}.
+
+In a production environment, a crontab job could be developed to check for updates daily and alert the server administrator(s) when there are security updates.
 % \subsubsection*{Anti-Malware: \texttt{rkhunter?}}
 
-\pagebreak
+% \pagebreak
 \subsection{Flask application: \texttt{salapp}}
+In developing my web application, I endeavoured to embed security and hardening from the start.
+
+I chose to use Python3 as the development language due to my existing familiarity with the language and Flask as the framework because it is lightweight and mature with a significant ecosystem of existing Flask extensions that enhance security by adding CSRF to forms, allowing the definition of custom validators for form inputs, setting security headers, enforcing HTTPS, and so on.
+
+Although I had not used Flask before, I was able to pick it up relatively quickly and integrate security considerations into the web application design from the beginning.
+
+\subsubsection{SQL Injection}
+The \texttt{Flask\_SQLAlchemy} extension is used to use to provide a link between the \texttt{SQLAlchemy} Python library and the Flask web application. If the Object Relational Mapper, provided by \texttt{SQLAlchemy}, is used correctly it is possible to correctly escape all inputs for the database and prevent SQL Injection attacks -- in short, this entails always use the ORM primitives and never directly formulating a SQL query.
+
+The \texttt{quotes} table, and columns therein, are defined in Python code in \texttt{salapp/app/models.py} \textit{(shown in Listing~\ref{lst:hard:models.py})}. It is possible here to set constraints on fields in the table, such as the length for the \texttt{db.String} type.
+
+This model definition will be used by \texttt{SQLAlchemy} to interact with the database and can even be used to create the SQL query statements to create new tables that store the fields defined in the model in a database.
+\begin{listing}[H]
+  \captionsetup{skip=\skiplistingcaptionlen}
+  \inputminted[breakanywhere]{python3}{../uswacs-2-iy2d502-salapp/app/models.py}
+  \caption{\texttt{salapp/app/models.py}}
+  \label{lst:hard:models.py}
+\end{listing}
+
+\subsubsection{User Input Validation}
+When taking data from clients via the quotes form, it is important to validate the input to ensure that it meets requirements and does not exceed constraints before inserting it in the database. The form definition and validation logic is handled in \hyperref[fcl:uswacs-2-iy2d502-salapp:forms.py]{salapp/app/forms.py}.
