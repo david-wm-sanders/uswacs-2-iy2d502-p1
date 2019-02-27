@@ -79,15 +79,44 @@ Although I had not used Flask before, I was able to pick it up relatively quickl
 \subsubsection{SQL Injection}
 The \texttt{Flask\_SQLAlchemy} extension is used to use to provide a link between the \texttt{SQLAlchemy} Python library and the Flask web application. If the Object Relational Mapper, provided by \texttt{SQLAlchemy}, is used correctly it is possible to correctly escape all inputs for the database and prevent SQL Injection attacks -- in short, this entails always use the ORM primitives and never directly formulating a SQL query.
 
-The \texttt{quotes} table, and columns therein, are defined in Python code in \texttt{salapp/app/models.py} \textit{(shown in Listing~\ref{lst:hard:models.py})}. It is possible here to set constraints on fields in the table, such as the length for the \texttt{db.String} type.
+The \texttt{quotes} table, and columns therein, are defined in Python code in \texttt{salapp/app/models.py} \textit{(shown in Listing~\ref{lst:hard:salapp:app:models.py})}. It is possible here to set constraints on fields in the table, such as the length for the \texttt{db.String} type.
 
 This model definition will be used by \texttt{SQLAlchemy} to interact with the database and can even be used to create the SQL query statements to create new tables that store the fields defined in the model in a database.
 \begin{listing}[H]
   \captionsetup{skip=\skiplistingcaptionlen}
-  \inputminted[breakanywhere]{python3}{../uswacs-2-iy2d502-salapp/app/models.py}
+  \inputminted[breakanywhere,firstline=5]{python3}{../uswacs-2-iy2d502-salapp/app/models.py}
   \caption{\texttt{salapp/app/models.py}}
-  \label{lst:hard:models.py}
+  \label{lst:hard:salapp:app:models.py}
 \end{listing}
 
 \subsubsection{User Input Validation}
 When taking data from clients via the quotes form, it is important to validate the input to ensure that it meets requirements and does not exceed constraints before inserting it in the database. The form definition and validation logic is handled in \hyperref[fcl:uswacs-2-iy2d502-salapp:forms.py]{salapp/app/forms.py}.
+
+The form is defined using the \texttt{Flask-WTF} extension -- this allows us to define the form as a Python class, which is then used to generate the form's HTML code dynamically.
+
+\texttt{Flask-WTF} provides some standard validators, such as \texttt{DataRequired()}, that can be used to validate field input but, more importantly, allows custom validation functions to be defined and used.
+
+Listing~\ref{lst:hard:salapp:app:forms.py:ModelLengthValidator} shows a custom validator that I defined which will, if it exists, acquire the length of the model field passed to it at initialisation and then use this to validate that the field data provided to the server via the form does not exceed the maximum string length for that database column. This validator is also capable of validating that an input has a minimum length.
+
+Listing~\ref{lst:hard:salapp:app:forms.py:SqlInjectionValidator} shows another custom validator that I defined to check if the field data contains possible SQL query terms that could be part of an SQL injection attack attempt.
+
+\begin{listing}[H]
+  \captionsetup{skip=\skiplistingcaptionlen}
+  \inputminted[breakanywhere,firstline=13,lastline=31]{python3}{../uswacs-2-iy2d502-salapp/app/forms.py}
+  \caption{\texttt{salapp/app/forms.py:ModelLengthValidator}}
+  \label{lst:hard:salapp:app:forms.py:ModelLengthValidator}
+\end{listing}
+
+\begin{listing}[H]
+  \captionsetup{skip=\skiplistingcaptionlen}
+  \inputminted[breakanywhere,firstline=49,lastline=68]{python3}{../uswacs-2-iy2d502-salapp/app/forms.py}
+  \caption{\texttt{salapp/app/forms.py:SqlInjectionValidator}}
+  \label{lst:hard:salapp:app:forms.py:SqlInjectionValidator}
+\end{listing}
+
+\subsubsection{Cross-Site Request Forgery Protection}
+
+
+
+\subsubsection{\todo{Flask Talisman}}
+\subsubsection{\todo{Adding SSL certs n' ting}}
