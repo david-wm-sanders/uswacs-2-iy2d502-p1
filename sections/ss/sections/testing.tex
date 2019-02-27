@@ -1,14 +1,51 @@
 \section{Security Testing}
 \todo{intro 100 words}
+\subsection{\texttt{Nmap}}
+\subsubsection*{Plan}
+Use \texttt{nmap} in order to perform a port scan of the server in order to verify that the firewall is operating correctly.
+
+\noindent Run \term{sudo nmap -p- <server\_ip>} to perform a full SYN scan of all ports at the target.
+
+\subsubsection*{Test Results Summary}
+As shown in Listing~\ref{lst:test:nmap_results}, all ports other than 22, 80, and 443 are being filtered by the firewall that was configured during server hardening in Section~\ref{sec:hardening:firewall}.
+\begin{listing}[H]
+  \captionsetup{skip=\skiplistingcaptionlen}
+  \begin{minted}[breakanywhere]{bash}
+    dwms@attack:~$ sudo nmap -p- 192.168.79.133
+
+    Starting Nmap 7.60 ( https://nmap.org ) at 2019-02-26 20:38 UTC
+    Stats: 0:00:01 elapsed; 0 hosts completed (1 up), 1 undergoing SYN Stealth Scan
+    SYN Stealth Scan Timing: About 0.01% done
+    ...
+    Stats: 2:35:48 elapsed; 0 hosts completed (1 up), 1 undergoing SYN Stealth Scan
+    SYN Stealth Scan Timing: About 90.64% done; ETC: 23:30 (0:16:05 remaining)
+    Nmap scan report for 192.168.79.133
+    Host is up (0.0010s latency).
+    Not shown: 65532 filtered ports
+    PORT    STATE SERVICE
+    22/tcp  open  ssh
+    80/tcp  open  http
+    443/tcp open  https
+    MAC Address: 00:0C:29:49:42:5A (VMware)
+
+    Nmap done: 1 IP address (1 host up) scanned in 10405.47 seconds
+  \end{minted}
+  \caption{\texttt{Nmap} Scan Results}
+  \label{lst:test:nmap_results}
+\end{listing}
+
+\pagebreak
 \subsection{Nessus}
-\subsubsection{Plan}
+\subsubsection*{Plan}
 \todo{50w}
-\subsubsection{Test Results Summary}
+\subsubsection*{Test Results Summary}
 \todo{50w}
+
+\pagebreak
 \subsection{Lynis}
-\subsubsection{Plan}
+\subsubsection*{Plan}
 \todo{50w}
-\subsubsection{Test Results Summary}
+\subsubsection*{Test Results Summary}
 \todo{50w}
 
 
