@@ -1,9 +1,9 @@
 \section{Hardening}
-\todo{Hardening intro...}
+% \todo{Hardening intro...}
 
 % \pagebreak
 \subsection{Ubuntu 18.10 Server: \texttt{salsrv}}
-\todo{some text here pls}
+% \todo{some text here pls}
 % \subsubsection*{Logical Volume Management}
 % \paragraph{Partitioning}
 % As discussed in the methodology, and although beyond the scope of this report, it would be possible to use Logical Volume Management to define a more resilient partitioning scheme on disk.
@@ -78,8 +78,7 @@ I chose to use Python3 as the development language due to my existing familiarit
 Although I had not used Flask before, I was able to pick it up relatively quickly and integrate security considerations into the web application design from the beginning.
 
 \subsubsection{SQL Injection}
-\todo{talk a bit about \^ and the implications it has for C, I, and A}
-
+% \todo{talk a bit about \^ and the implications it has for C, I, and A}
 The \texttt{Flask\_SQLAlchemy} extension is used to use to provide a link between the \texttt{SQLAlchemy} Python library and the Flask web application. If the Object Relational Mapper, provided by \texttt{SQLAlchemy}, is used correctly it is possible to correctly escape all inputs for the database and prevent SQL Injection attacks -- in short, this entails always use the ORM primitives and never directly formulating a SQL query.
 
 The \texttt{quotes} table, and columns therein, are defined in Python in \texttt{salapp/app/models.py} \textit{(shown in Listing~\ref{lst:hard:salapp:app:models.py})}. It is possible here to set constraints on fields in the table, such as the length for the \texttt{db.String} type.
@@ -139,7 +138,37 @@ The \texttt{FlaskForm} class that the \texttt{QuoteForm} subclasses in \hyperref
   \label{lst:hard:salapp:app:templates:get_quote.html:QuoteFormTagExtract}
 \end{listing}
 
-\subsubsection{\todo{Adding SSL certs n' ting}}
-\todo{add cert for server and integrate in app, then doc}
+\subsubsection{HTTPS}
+Generate RSA keys for SSL/TLS with:\\
+\term{openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 365}
+
+\noindent This will provide an interactive prompt where we can set information for our self-signed certificate \textit{(as shown in Listinf~\ref{lst:hard:salapp:gen_tls_certs})}.
+
+\begin{listing}[H]
+  \captionsetup{skip=\skiplistingcaptionlen}
+  \begin{minted}[breakanywhere]{html+jinja}
+    Generating a RSA private key
+    ...
+    writing new private key to 'key.pem'
+    -----
+    You are about to be asked to enter information that will be incorporated
+    into your certificate request.
+    What you are about to enter is what is called a Distinguished Name or a DN.
+    There are quite a few fields but you can leave some blank
+    For some fields there will be a default value,
+    If you enter '.', the field will be left blank.
+    -----
+    Country Name (2 letter code) [AU]:GB
+    State or Province Name (full name) [Some-State]:Wales
+    Locality Name (eg, city) []:Newport
+    Organization Name (eg, company) [Internet Widgits Pty Ltd]:SalTech
+    Organizational Unit Name (eg, section) []:SOC
+    Common Name (e.g. server FQDN or YOUR name) []:localhost
+    Email Address []:
+  \end{minted}
+  \caption{Generating a SSL/TLS certificate and private key for HTTPS}
+  \label{lst:hard:salapp:gen_tls_certs}
+\end{listing}
+
 \subsubsection{\todo{Flask Talisman}}
 \todo{integrate in app, then doc what it provides for us}
