@@ -93,7 +93,7 @@ This model definition will be used by \texttt{SQLAlchemy} to interact with the d
 \end{listing}
 
 \subsubsection{User Input Validation}
-When taking data from clients via the quotes form, it is important to validate the input to ensure that it meets requirements and does not exceed constraints before inserting it in the database. The form definition and validation logic is handled in \hyperref[fcl:uswacs-2-iy2d502-salapp:forms.py]{salapp/app/forms.py}.
+When taking data from clients via the quotes form, it is important to validate the input to ensure that it meets requirements and does not exceed constraints before inserting it in the database. The form definition and validation logic is handled in \hyperref[fcl:uswacs-2-iy2d502-salapp:forms.py]{\texttt{salapp/app/forms.py}}.
 
 The form is defined using the \texttt{Flask-WTF} extension -- this allows us to define the form as a Python class, which is then used to generate the form's HTML code dynamically.
 
@@ -119,8 +119,25 @@ As a note here, the form fields are defined using a custom subclass of \texttt{S
   \label{lst:hard:salapp:app:forms.py:SqlInjectionValidator}
 \end{listing}
 
-\subsubsection{\todo{Cross-Site Request Forgery Protection}}
-\todo{writeup how including the form.hidden\_tags() in the html jinja template will include the token provided automatically by FlaskForm}
+\subsubsection{Cross-Site Request Forgery Protection}
+The \texttt{FlaskForm} class that the \texttt{QuoteForm} subclasses in \hyperref[fcl:uswacs-2-iy2d502-salapp:forms.py]{\texttt{salapp/app/forms.py}} can automatically provide and validate a CSRF Protection Token for the form, as long as the\\
+\term{\{\{ form.hidden\_tag() \}\}} is included in the form template \textit{(as shown on line 4 of Listing~\ref{lst:hard:salapp:app:templates:get_quote.html:QuoteFormTagExtract})}.
+
+\begin{listing}[H]
+  \captionsetup{skip=\skiplistingcaptionlen}
+  \begin{minted}[breakanywhere]{html+jinja}
+    <!-- DEBUG: include novalidate for the purpose of testing server-side validation -->
+        <form action="" method="POST" {% if _debugging %}novalidate{% endif %}>
+          <!-- Security considerations: Include the form's hidden tags to enable the CSRF protection by including the token in a hidden field -->
+          {{ form.hidden_tag() }}
+          <div class="form-row">
+            <div class="form-group col-md-6">{{ form.forename(class_='form-control', placeholder=form.forename.label.text) }}</div>
+            <div class="form-group col-md-6">{{ form.surname(class_='form-control', placeholder=form.surname.label.text) }}</div>
+          </div>
+  \end{minted}
+  \caption{\texttt{salapp/app/templates/get\_quote.html:QuoteFormTagExtract}}
+  \label{lst:hard:salapp:app:templates:get_quote.html:QuoteFormTagExtract}
+\end{listing}
 
 \subsubsection{\todo{Adding SSL certs n' ting}}
 \todo{add cert for server and integrate in app, then doc}
