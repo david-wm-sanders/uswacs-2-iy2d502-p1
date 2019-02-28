@@ -1,5 +1,24 @@
 \section{Solution Evaluation}
 \subsection{Expert Feedback}
-\todo{maybe maxime will lend a hand xd?}
+In evaluating a solution, it is imperative to seek peer and expert feedback -- for a production servers, it would be advisable to obtain professional source code reviews, penetration testing, and auditing to validate that the server configuration and web application deployment is as secure as intended.
+
+However, due to time constraints \textit{(stemming from an initially unclear project specification)} it was not possible to obtain peer feedback. In addition, my choice to deploy my server using different technologies would make peer review by those that do not understand Python difficult.
+
+In lieu of this, I did consult with other associates on techniques for hardening servers and common web vulnerabilities that the solution should attempt to prevent -- in the capacity of a consultant \textit{(responding to queries about SQL injection, CSRF, SSH hardening, and so on)}.
+
 \subsection{Future Work}
-\todo{more hardening, auto server deployments with subiquity config, ansible playbook remote hardening, docker container image hardening, load balancing nginx proxy}
+Although a relatively secure solution has been developed, much more hardening work could be done to further secure the server and web application.
+
+Some things that I have considered include:
+\begin{itemize}
+  \item Fully encrypting the server drives with LUKS
+  \item Using LVM to have separate partitions for certain partitions, such as \texttt{/tmp}, that are mounted with options such as \texttt{noexec}
+  \item Setting up a crontab job to regularly check for updates and alert administrator(s)
+  \item Running \texttt{Lynis} to audit the system and fixing the issues that occur
+  \item Developing a Subiquity config to define a hardened semi-automated install -- this would handle the encryption \textit{(whilst asking the user for the LUKS passphrase)} and separate partitions
+  \item Writing an \texttt{ansible} playbook that is capable of remotely hardening a system to bring it in line with \texttt{Lynis} suggestions
+  \item Hardening \texttt{docker} by applying a SELinux configuration to the server
+  \item Deriving the \texttt{salapp} container from the \texttt{python:3.7-alpine} image by significantly modifying the \texttt{Dockerfile} to install a compiler into the image, compile the \texttt{cryptography}, and remove the compiler \textit{(for increased security)} whilst also hardening Python itself
+  \item Building a \texttt{nginx} load-balancing proxy that acts as an intermediary between the clients and the \texttt{salapp} instances running with \texttt{gunicorn} -- this would make the application more scalable and could terminate the HTTPS connections to abstract this concern out of the web application
+  \item Integrating \texttt{Flask-Talisman} into the \texttt{salapp} web application in order to provide HTTP security headers, such as Content Security Policy
+\end{itemize}
