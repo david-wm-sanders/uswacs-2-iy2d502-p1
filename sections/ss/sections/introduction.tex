@@ -17,7 +17,7 @@ As such, I decided to deploy the MySQL and gunicorn/Flask instances in separate 
   \paragraph{\href{https://hub.docker.com/\_/mysql}{\faExternalLinkSquare} MySQL}
   \hspace{-0.6em}-- as the database server/management system, running in a docker container \todo{and only exposed to other containers explicitly?}
   \paragraph{\href{https://pypi.org/project/gunicorn/}{\faExternalLinkSquare} Gunicorn}
-  \hspace{-0.6em}-- as the WSGI HTTP Server, running the web application in a custom built container based on the python3.7-alpine docker image.
+  \hspace{-0.6em}-- as the WSGI HTTP Server, running the web application in a custom built container based on the python3.7-slim docker image.
   \paragraph{\href{https://pypi.org/project/Flask/1.0.2/}{\faExternalLinkSquare} Flask}
   \hspace{-0.6em}-- as the web application development framework, with Python3 and jinja as the development languages.
   \vspace{1em}
