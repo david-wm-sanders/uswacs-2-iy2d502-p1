@@ -1,6 +1,6 @@
 \section{Security Testing}
 % \todo{intro 100 words}
-\subsection{\texttt{Nmap}}
+\subsection{Use Nmap to check firewall}
 \subsubsection*{Plan}
 Use \texttt{nmap} in order to perform a port scan of the server in order to verify that the firewall is operating correctly.
 \begin{itemize}
@@ -31,12 +31,12 @@ As shown in Listing~\ref{lst:test:nmap_results}, all ports other than 22, 80, an
 
     Nmap done: 1 IP address (1 host up) scanned in 10405.47 seconds
   \end{minted}
-  \caption{\texttt{Nmap} Scan Results}
+  \caption{Nmap Scan Results}
   \label{lst:test:nmap_results}
 \end{listing}
 
 \pagebreak
-\subsection{Nessus}
+\subsection{Use Nessus to check web application}
 \subsubsection*{Plan}
 Use Nessus to test the server for web application vulnerabilities.
 \begin{itemize}
@@ -47,6 +47,8 @@ Use Nessus to test the server for web application vulnerabilities.
 \end{itemize}
 \subsubsection*{Test Results Summary}
 The test reported 1 medium vulnerability relating to click-jacking because the server does not set \texttt{X-Frame-Options} or \texttt{Content-Security-Policy frame-ancestors} headers. The Executive Summary of the report is included in Appendix~\ref{app:ntr:salapp_test_2}.
+
+It should be noted that no vulnerabilities related to SQL injection, user input validation, CSRF, or HTTPS were found in this scan.
 \subsubsection*{Further Hardening}
 \begin{itemize}
   \item Integrate \texttt{Flask-Talisman} into the \texttt{salapp} web application. The \texttt{Flask-Talisman} extension can be used to handle the task of setting HTTP security headers.
