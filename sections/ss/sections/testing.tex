@@ -1,10 +1,11 @@
 \section{Security Testing}
-\todo{intro 100 words}
+% \todo{intro 100 words}
 \subsection{\texttt{Nmap}}
 \subsubsection*{Plan}
 Use \texttt{nmap} in order to perform a port scan of the server in order to verify that the firewall is operating correctly.
-
-\noindent Run \term{sudo nmap -p- <server\_ip>} to perform a full SYN scan of all ports at the target.
+\begin{itemize}
+  \item Run \term{sudo nmap -p- <server\_ip>} to perform a full SYN scan of all ports at the target.
+\end{itemize}
 
 \subsubsection*{Test Results Summary}
 As shown in Listing~\ref{lst:test:nmap_results}, all ports other than 22, 80, and 443 are being filtered by the firewall that was configured during server hardening in Section~\ref{sec:hardening:firewall}.
@@ -37,17 +38,29 @@ As shown in Listing~\ref{lst:test:nmap_results}, all ports other than 22, 80, an
 \pagebreak
 \subsection{Nessus}
 \subsubsection*{Plan}
-\todo{50w}
+Use Nessus to test the server for web application vulnerabilities.
+\begin{itemize}
+  \item Set up a Nessus instance
+  \item Create a new Web Application scan with the target set to the server
+  \item Review and export the test results
+  \item Plan further hardening tasks
+\end{itemize}
 \subsubsection*{Test Results Summary}
-\todo{50w}
+The test reported 1 medium vulnerability relating to click-jacking because the server does not set \texttt{X-Frame-Options} or \texttt{Content-Security-Policy frame-ancestors} headers. The Executive Summary of the report is included in Appendix~\ref{app:ntr:salapp_test_2}.
+\subsubsection*{Further Hardening}
+\begin{itemize}
+  \item Integrate \texttt{Flask-Talisman} into the \texttt{salapp} web application. The \texttt{Flask-Talisman} extension can be used to handle the task of setting HTTP security headers.
+\end{itemize}
 
-\pagebreak
-\subsection{Lynis}
-\subsubsection*{Plan}
-\todo{50w}
-\subsubsection*{Test Results Summary}
-\todo{50w}
+\noindent\textcolor{deep-gray}{Due to time constraints, implementing \texttt{Flask-Talisman} in \texttt{salapp} was deemed beyond project scope.}
 
-
-\subsection{Further Hardening}
-\todo{200w}
+% \pagebreak
+% \subsection{Lynis}
+% \subsubsection*{Plan}
+% \todo{50w}
+% \subsubsection*{Test Results Summary}
+% \todo{50w}
+%
+%
+%
+% \todo{200w}

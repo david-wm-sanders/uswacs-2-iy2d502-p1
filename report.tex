@@ -49,9 +49,21 @@
 \appendix
 % Insert evidential screenshots appendix
 \input{sections/_screenshots/evidence.tex}
+
+\pagebreak
+% \label{app:ntr:salapp_test_2}
+\includepdf[frame,pages=1,scale=0.8,pagecommand={\thispagestyle{fancy}\section{Nessus Test Report: \texttt{salapp test 2}\label{app:ntr:salapp_test_2}}}]{sections/_nessus_reports/salapp_test_2.pdf}
+\includepdf[frame,pages=2-,scale=0.8,pagecommand={\thispagestyle{fancy}}]{sections/_nessus_reports/salapp_test_2.pdf}
+
+\pagebreak
+\section{Nessus Test Report: \texttt{salapp test 3}}
+\label{app:ntr:salapp_test_3}
+
 \pagebreak
 % Insert auto-generated code listing appendix for salapp
 % DEBUG: comment for quicker compile while writing rest of report... :/
 \input{sections/_code_listings/uswacs-2-iy2d502-salapp.tex}
+
+
 
 \end{document}
