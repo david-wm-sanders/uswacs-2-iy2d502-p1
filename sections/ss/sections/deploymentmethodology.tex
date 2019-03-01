@@ -2,7 +2,7 @@
 Underlined is a basic methodology for deploying the server, MySQL, and the web application with gunicorn.
 
 \begin{enumerate}[leftmargin=0em,label=\protect\listlabelcircle{\arabic*}]
-  \item Set up Ubuntu Server 18.10 \footnote{\href{http://releases.ubuntu.com/18.10/ubuntu-18.10-live-server-amd64.iso}{\texttt{ubuntu-18.10-live-server-amd64.iso}}} using the Subiquity\footnote{\href{https://github.com/CanonicalLtd/subiquity}{\faGithub\ CanonicalLtd/subiquity}} installer
+  \item Set up Ubuntu Server 18.10 \footnote{\href{http://releases.ubuntu.com/18.10/ubuntu-18.10-live-server-amd64.iso}{\faUbuntu\ \texttt{ubuntu-18.10-live-server-amd64.iso}}} using the Subiquity\footnote{\href{https://github.com/CanonicalLtd/subiquity}{\faGithub\ CanonicalLtd/subiquity}} installer
     \begin{enumerate}[label=\Roman*~\textcolor{light-gray}{|}]
       \item Select \textit{Install Ubuntu Server} at the GRUB2 boot menu\\
       \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-15-19}]}}
@@ -45,7 +45,7 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
           \item \term{--name mysql}: named \texttt{mysql}
           \item \term{-d}: detached so that it runs in the background
           \item \term{-e}: with environment variables to configure a random root password, create a database for the web application, and create a user with a password for the web application
-          \item from the \texttt{mysql/mysql-server:latest}\footnote{\href{https://hub.docker.com/r/mysql/mysql-server/}{Docker Hub: MySQL/mysql-server}} image on Docker Hub\footnote{\href{https://docs.docker.com/docker-hub/repos/}{Docker Docs: Docker Hub Repositories}}
+          \item from the \texttt{mysql/mysql-server:latest}\footnote{\href{https://hub.docker.com/r/mysql/mysql-server/}{\faDocker\ Docker Hub: MySQL/mysql-server}} image on Docker Hub\footnote{\href{https://docs.docker.com/docker-hub/repos/}{\faDocker\ Docker Docs: Docker Hub Repositories}}
         \end{itemize}
         \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-22-00-58-41}]}}
         \begin{listing}[H]
@@ -108,7 +108,7 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
         \end{listing}
         \begin{listing}[H]
           \captionsetup{skip=\skiplistingcaptionlen}
-          \inputminted[breakanywhere]{bash}{../uswacs-2-iy2d502-salapp/Dockerfile}
+          \inputminted[breakanywhere]{dockerfile}{../uswacs-2-iy2d502-salapp/Dockerfile}
           \caption{\texttt{salapp/Dockerfile}}
           \label{lst:meth:Dockerfile}
         \end{listing}
