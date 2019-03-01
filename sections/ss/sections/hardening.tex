@@ -58,6 +58,7 @@ This involves:
     \term{sudo ufw status}
 \end{itemize}
 
+\pagebreak
 \subsubsection{Ensuring that the system in upgraded}
 Ensure that the server is patched regularly \textit{(as shown in Figures~\ref{fig:IY2D502-2019-02-22-23-41-29}~and~\ref{fig:IY2D502-2019-02-22-23-44-52})}. Security vulnerabilities in system packages could expose the server to exploits that compromise confidentiality, integrity, and/or availability.
 
@@ -103,6 +104,8 @@ Listing~\ref{lst:hard:salapp:app:forms.py:ModelLengthValidator} shows a custom v
 Listing~\ref{lst:hard:salapp:app:forms.py:SqlInjectionValidator} shows another custom validator that I defined to check if the field data contains possible SQL query terms that could be part of an SQL injection attack attempt. By default, this validator will raise a \texttt{ValidationError} with a message that can be returned to the user's browser so that they can remedy the issue and request a quote successfully. However, it can be set to only log the issue and not reject the data with a \texttt{ValidationError}. This is possible because any SQL terms that bypass this validator will be correctly escaped by \texttt{SQLAlchemy} before they reach the database. The validator will always log a \texttt{SECURITY ALERT} warning, noting that a possible SQL injection attack attempt has occurred. As the \texttt{gunicorn} server running the application is started in such a way as to order access and error logs to be output to the standard output, the security alert warnings will be visible via \term{docker logs} and could be monitored in an automated fashion in a SOC setup.
 
 As a note here, the form fields are defined using a custom subclass of \texttt{StringField} called \texttt{ModelStringField}. This class allows the model field to be passed at initialisation and will use this to set the \texttt{maxlength} attribute for the \texttt{input} tag in the generated HTML. This allows client-side validators to hint to the user that the data they have input will fail validation before they make a request. This is a nicety and provides no additional security to the server as a directive in HTML to perform client-side validation can be ignored by the client.
+
+The \texttt{ModelStringField} and \texttt{ModelLengthValidator} that Python3/Flask allow us to define are an example of the Single Responsibility Principle -- the application is made more secure by the fact that the model properties, such as length, are defined in a single place and then intelligently queried by other components of the web application such as the forms.
 
 \begin{listing}[H]
   \captionsetup{skip=\skiplistingcaptionlen}

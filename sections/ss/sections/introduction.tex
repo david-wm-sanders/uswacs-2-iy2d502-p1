@@ -11,6 +11,8 @@ As such, I decided to deploy the MySQL and gunicorn/Flask instances in separate 
 
 This deployment strategy forces the web application to be written in such as way that it can be bundled into a least-privilege container with all of its dependencies -- being able to spin up web application instances in this manner makes the application scalable whilst also improving security by segregating the different components \textit{(database, server)} from each other in separate containers.
 
+As a reference for learning Flask and understanding how to lay out Flask web applications in a modular fashion so that they can be secured and extended easily, I made extensive use of Miguel Grinberg's Flask Mega-Tutorial\footnote{\href{https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world}{Miguel Grinberg's Flask Mega-Tutorial}}. The wide availability of tutorials and documentation for Python and Flask, as well as significant security discourse, make it a simple and versatile language/framework to develop secure systems with.
+
 \begin{displaytable}{\label{display:lamp_stack}}{Dockerised LAMP Stack}
   \paragraph{\href{http://releases.ubuntu.com/18.10/ubuntu-18.10-live-server-amd64.iso}{\faUbuntu\ Ubuntu Server 18.10}}
   \hspace{-0.6em}-- as the deployment operating system.
