@@ -18,6 +18,7 @@ Some things that I have considered include:
   \item Developing a Subiquity config to define a hardened semi-automated install -- this would handle the encryption \textit{(whilst asking the user for the LUKS passphrase)} and separate partitions
   \item Writing an \texttt{ansible} playbook that is capable of remotely hardening a system to bring it in line with \texttt{Lynis} suggestions
   \item Hardening \texttt{docker} by applying a SELinux configuration to the server
+  \item Revoking unnecessary database privileges, such as \texttt{DROP}, from the \texttt{salapp} user
   \item Deriving the \texttt{salapp} container from the \texttt{python:3.7-alpine} image by significantly modifying the \texttt{Dockerfile} to install a compiler into the image, compile the \texttt{cryptography}, and remove the compiler \textit{(for increased security)} whilst also hardening Python itself
   \item Building a \texttt{nginx} load-balancing proxy that acts as an intermediary between the clients and the \texttt{salapp} instances running with \texttt{gunicorn} -- this would make the application more scalable and could terminate the HTTPS connections to abstract this concern out of the web application
   \item Integrating \texttt{Flask-Talisman} into the \texttt{salapp} web application in order to provide HTTP security headers, such as Content Security Policy

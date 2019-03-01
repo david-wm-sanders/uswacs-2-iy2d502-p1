@@ -1,24 +1,24 @@
 \section{Introduction}
-\todo{an overarching view of the project requirements, methodology adopted, report layout, tests done, secure development strategies used, etc}
-
 For this assignment, my task was to deploy and secure a LAMP stack. As a solution for deploying web applications and sites, the term `LAMP' originally comes from the components: Linux \textit{(as the deployment operating system)}, Apache \textit{(as the HTTP web server)}, MySQL \textit{(as the database server/management system)}, and PHP \textit{(as the web site/application development language)}.
 
 However, in modern usage, the term "LAMP" refers to a deployment model where alternatives can be used in lieu of the original components.
 
 In seeking to meet the security constraints of the requirements, I endeavoured to choose development and deployment frameworks that would enable me to secure the web application and server as effectively as possible from the start.
 
+As a methodology for building scalable secure applications or software-as-service, I followed the \texttt{Twelve-Factor App}\footnote{\href{https://12factor.net/}{The Twelve Factor App}} suggestions whilst also evaluating additional security risk considerations and pertinent mitigations.
+
 As such, I decided to deploy the MySQL and gunicorn/Flask instances in separate docker containers.
 
-\todo{more fluff here about docker, secure development with flask/python - it's easy af, testing strategy?}
+This deployment strategy forces the web application to be written in such as way that it can be bundled into a least-privilege container with all of its dependencies -- being able to spin up web application instances in this manner makes the application scalable whilst also improving security by segregating the different components \textit{(database, server)} from each other in separate containers.
 
 \begin{displaytable}{\label{display:lamp_stack}}{Dockerised LAMP Stack}
-  \paragraph{\href{http://releases.ubuntu.com/18.10/ubuntu-18.10-live-server-amd64.iso}{\faUbuntu} Ubuntu Server 18.10}
+  \paragraph{\href{http://releases.ubuntu.com/18.10/ubuntu-18.10-live-server-amd64.iso}{\faUbuntu\ Ubuntu Server 18.10}}
   \hspace{-0.6em}-- as the deployment operating system.
-  \paragraph{\href{https://hub.docker.com/\_/mysql}{\faDatabase} MySQL}
-  \hspace{-0.6em}-- as the database server/management system, running in a docker container \todo{and only exposed to other containers explicitly?}
-  \paragraph{\href{https://pypi.org/project/gunicorn/}{\faServer} Gunicorn}
+  \paragraph{\href{https://hub.docker.com/\_/mysql}{\faDatabase\ MySQL}}
+  \hspace{-0.6em}-- as the database server/management system, running in a docker container and only exposed to other containers explicitly by linking
+  \paragraph{\href{https://pypi.org/project/gunicorn/}{\faServer\ Gunicorn}}
   \hspace{-0.6em}-- as the WSGI HTTP Server, running the web application in a custom built container based on the python3.7-slim docker image.
-  \paragraph{\href{https://pypi.org/project/Flask/1.0.2/}{\faPython} Flask}
+  \paragraph{\href{https://pypi.org/project/Flask/1.0.2/}{\faPython\ Flask}}
   \hspace{-0.6em}-- as the web application development framework, with Python3 and jinja as the development languages.
   \vspace{1em}
 \end{displaytable}
