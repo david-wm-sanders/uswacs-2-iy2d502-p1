@@ -28,6 +28,7 @@
 \usepackage{fontawesome5}
 \usepackage{layouts}
 \usepackage{tikz}
+\usepackage{fontspec}
 % -
 
 % Configuration
@@ -55,8 +56,11 @@
 \hypersetup{colorlinks=true, linkcolor=nicer-blue, citecolor=black, urlcolor=nicer-blue}
 % Set the default graphicx path
 \graphicspath{{images/}}
-% Change font to Palatino
-\renewcommand{\rmdefault}{ppl}
+% Modify fonts
+% \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+\setmainfont{Palatino Linotype}
+% \setmonofont{Courier New}
+% \renewcommand{\rmdefault}{ppl}
 % Change the list item spacing
 % \setlist{noitemsep}
 \setlist{itemsep=0.2em}
