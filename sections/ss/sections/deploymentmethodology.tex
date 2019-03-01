@@ -102,15 +102,15 @@ Underlined is a basic methodology for deploying the server, MySQL, and the web a
         \end{listing}
         \begin{listing}[H]
           \captionsetup{skip=\skiplistingcaptionlen}
-          \inputminted[breakanywhere]{bash}{../uswacs-2-iy2d502-salapp/boot.sh}
-          \caption{\texttt{salapp/boot.sh}}
-          \label{lst:meth:boot_sh}
-        \end{listing}
-        \begin{listing}[H]
-          \captionsetup{skip=\skiplistingcaptionlen}
           \inputminted[breakanywhere]{dockerfile}{../uswacs-2-iy2d502-salapp/Dockerfile}
           \caption{\texttt{salapp/Dockerfile}}
           \label{lst:meth:Dockerfile}
+        \end{listing}
+        \begin{listing}[H]
+          \captionsetup{skip=\skiplistingcaptionlen}
+          \inputminted[breakanywhere]{bash}{../uswacs-2-iy2d502-salapp/boot.sh}
+          \caption{\texttt{salapp/boot.sh}}
+          \label{lst:meth:boot_sh}
         \end{listing}
       \pagebreak
       \item Start a containerised docker instance of \texttt{salapp} with the \texttt{salapp/start\_salapp.sh} script \textit{(shown in Listing~\ref{lst:meth:start_salapp_sh})} with:\\
