@@ -1,9 +1,11 @@
 \section{Deployment Methodology}
 Detailed below is a basic methodology for deploying the server, MySQL, and the web application with gunicorn.
 
-\begin{enumerate}[leftmargin=0em,label=\protect\listlabelcircle{\Large\arabic*}]
+% \begin{enumerate}[leftmargin=0em,label=\protect\listlabelcircle{\Large\arabic*}]
+\begin{methodology0}
   \item Set up Ubuntu Server 18.10 \footnote{\href{http://releases.ubuntu.com/18.10/ubuntu-18.10-live-server-amd64.iso}{\faUbuntu\ \texttt{ubuntu-18.10-live-server-amd64.iso}}} using the Subiquity\footnote{\href{https://github.com/CanonicalLtd/subiquity}{\faGithub\ CanonicalLtd/subiquity}} installer
-    \begin{enumerate}[label=\Roman*~\textcolor{light-gray}{|}]
+    % \begin{enumerate}[label=\Roman*~\textcolor{light-gray}{|}]
+    \begin{methodology1}
       \item Select \textit{Install Ubuntu Server} at the GRUB2 boot menu\\
       \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-15-19}]}}
       \item For standard UK keyboards, set the layout and variant to \textit{English {UK}} and \textit{English (UK, extended, with Win keys)} respectively -- this will help to ensure that passwords are entered correctly\\
@@ -25,20 +27,20 @@ Detailed below is a basic methodology for deploying the server, MySQL, and the w
           \item \term{sudo apt upgrade}
         \end{itemize}
       \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-19-22-44}]}}
-    \end{enumerate}
+    \end{methodology1}
   \pagebreak
   \item Download latest \texttt{salapp}
-    \begin{enumerate}[label=\Roman*~\textcolor{light-gray}{|}]
+    \begin{methodology1}
       \item Clone \texttt{salapp} from \href{https://github.com/david-wm-sanders/uswacs-2-iy2d502-salapp}{\faGithub\ david-wm-sanders/uswacs-2-iy2d502-salapp} using:\\
       \term{git clone git@github.com:david-wm-sanders/uswacs-2-iy2d502-salapp.git}
-    \end{enumerate}
+    \end{methodology1}
   \item Install \texttt{docker-ce}\footnote{\href{https://github.com/docker/docker-ce}{\faGithub\ docker/docker-ce}} \textit{(Docker Community Edition)}
-    \begin{enumerate}[label=\Roman*~\textcolor{light-gray}{|}]
+    \begin{methodology1}
       \item Use \term{sudo apt install docker.io} to install \texttt{docker} on the server\\
       \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-23-29-41}]}}
-    \end{enumerate}
+    \end{methodology1}
   \item Set up a containerised MySQL instance using docker
-    \begin{enumerate}[label=\Roman*~\textcolor{light-gray}{|}]
+    \begin{methodology1}
       \item To start a MySQL container for the first time, run the \texttt{salapp/start\_mysql.sh} script \textit{(shown in Listing~\ref{lst:meth:start_mysql_sh})} with \term{sudo ./start\_mysql.sh}\\
         This script will \term{run} a docker container:
         \begin{itemize}
@@ -54,18 +56,18 @@ Detailed below is a basic methodology for deploying the server, MySQL, and the w
           \caption{\texttt{salapp/start\_mysql.sh}}
           \label{lst:meth:start_mysql_sh}
         \end{listing}
-    \end{enumerate}
+    \end{methodology1}
   \pagebreak
   \item Deploy \texttt{salapp} with docker
-    \begin{enumerate}[label=\Roman*~\textcolor{light-gray}{|}]
+    \begin{methodology1}
       \item To build the \texttt{salapp} container from the \texttt{Dockerfile}, run the \texttt{salapp/make\_salapp.sh} script \textit{(shown in Listing~\ref{lst:meth:make_salapp_sh})} with \term{sudo ./make\_salapp.sh}\\
         \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-21-23-43-07}]}}\\
         This process entails:
         \begin{itemize}
           \item Using \texttt{docker build} to create a new container, tagged with \term{-t salapp:latest}, from the \texttt{Dockerfile} in \term{.}
           \item Having a \texttt{Dockerfile} \textit{(shown in Listing~\ref{lst:meth:Dockerfile})} that defines commands that:
-            % \begin{enumerate}[label=\textcolor{light-gray}{\roman*\~}]
-            \begin{enumerate}[label=\textcolor{deep-gray}{\roman*\textasciitilde}]
+            % \begin{enumerate}[label=\textcolor{deep-gray}{\roman*\textasciitilde}]
+            \begin{methodology2}
               \item Derive the new container \term{FROM} the \texttt{python:3.7-slim} image
               \item \term{adduser} called \texttt{salapp} with a home directory
               \item Set the \term{WORKDIR} in the container to the home directory for the \texttt{salapp} user
@@ -81,9 +83,9 @@ Detailed below is a basic methodology for deploying the server, MySQL, and the w
               \item Become \term{USER salapp} for all commands after this and each time the container is started
               \item \term{EXPOSE} ports externally to the container
               \item Make \texttt{salapp/boot.sh} the \term{ENTRYPOINT} of the container
-            \end{enumerate}
+            \end{methodology2}
           \item Having a \texttt{boot.sh} \textit{(shown in Listing~\ref{lst:meth:boot_sh})} that defines how the container starts -- in this case:
-            \begin{enumerate}[label=\textcolor{deep-gray}{\roman*\textasciitilde}]
+            \begin{methodology2}
               \item Activating the virtual environment \textit{(which will add the path to ./venv/bin/ to the PATH)}
               \item Running \term{flash db upgrade} to perform any initial table creation or existing database version migrations
               \item Executing \texttt{gunicorn} with:
@@ -92,7 +94,7 @@ Detailed below is a basic methodology for deploying the server, MySQL, and the w
                   \item \term{--access-logfile - --error-logfile -}: to write access and error logfiles to standard output so docker can log it
                   \item \term{salapp:app}: to set the Flask app instance in salapp as the logic
                 \end{itemize}
-            \end{enumerate}
+            \end{methodology2}
         \end{itemize}
         \begin{listing}[H]
           \captionsetup{skip=\skiplistingcaptionlen}
@@ -133,17 +135,17 @@ Detailed below is a basic methodology for deploying the server, MySQL, and the w
           \caption{\texttt{salapp/start\_salapp.sh}}
           \label{lst:meth:start_salapp_sh}
         \end{listing}
-    \end{enumerate}
+    \end{methodology1}
   \pagebreak
   \item Connect to the \texttt{salapp} web application at \texttt{<server\_ip>:<port>}
-    \begin{enumerate}[label=\Roman*~\textcolor{light-gray}{|}]
+    \begin{methodology1}
       \item Provide data to the form at \texttt{/get-a-quote} that passes validation\\
         \textcolor{deep-gray}{\textit{[Figure~\ref{fig:salapp1}]}}
       \item Attempt to provide data to the form at \texttt{/get-a-quote} that fails validation\\
         \textcolor{deep-gray}{\textit{[Figure~\ref{fig:salapp2}]}}
-    \end{enumerate}
+    \end{methodology1}
   \item Check that the successfully validated quotes were inserted into the database correctly
-    \begin{enumerate}[label=\Roman*~\textcolor{light-gray}{|}]
+    \begin{methodology1}
       \item Use the \texttt{salapp/mysql\_salapp\_login.sh} script to run a \texttt{mysql} prompted, as the \texttt{salapp} user, inside the \texttt{mysql} container -- from this \texttt{mysql} prompt, it is possible to verify that successful requests were inserted into the database by the web application\\
         \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-22-06-50-24}]}}
       \item Alternatively, the \texttt{salapp/mysql\_root\_login.sh} script can also be used to perform administrative tasks such as adjusting user privileges via \texttt{GRANT} and \texttt{REVOKE} as required
@@ -159,11 +161,11 @@ Detailed below is a basic methodology for deploying the server, MySQL, and the w
         \caption{\texttt{salapp/mysql\_root\_login.sh}}
         \label{lst:meth:mysql_root_login_sh}
       \end{listing}
-    \end{enumerate}
+    \end{methodology1}
   \item Checking the log messages emitted by process inside a docker container for security alerts
-  \begin{enumerate}[label=\Roman*~\textcolor{light-gray}{|}]
+  \begin{methodology1}
     \item In order to view the check the log messages generated by the \texttt{salapp} web application for the \texttt{SECURITY ALERT} warnings generated when possible SQL injection is detected, run:\\
       \term{sudo docker logs salapp 2>\&1 | grep 'SECURITY ALERT'}\\
       \textcolor{deep-gray}{\textit{[Figure~\ref{fig:IY2D502-2019-02-23-00-23-12}]}}
-  \end{enumerate}
-\end{enumerate}
+  \end{methodology1}
+\end{methodology0}

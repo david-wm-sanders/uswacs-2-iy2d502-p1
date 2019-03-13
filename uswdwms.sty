@@ -3,7 +3,6 @@
 \usepackage[T1]{fontenc}
 \usepackage[UKenglish]{babel}
 \usepackage[useregional]{datetime2}
-% \usepackage[useregional,showdow]{datetime2}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage[a4paper, margin=0.75in]{geometry}
@@ -287,5 +286,23 @@
   \begin{tikzpicture}[baseline=(C.base)]
     \node[draw,circle,inner sep=1pt,minimum size=3ex](C) {#1};
   \end{tikzpicture}
+}
+
+\NewEnviron{methodology0}[0]{
+  \begin{enumerate}[leftmargin=0em,label=\protect\listlabelcircle{\Large\arabic*}]
+    \BODY
+  \end{enumerate}
+}
+
+\NewEnviron{methodology1}[0]{
+  \begin{enumerate}[label=\Roman*~\textcolor{light-gray}{|}]
+    \BODY
+  \end{enumerate}
+}
+
+\NewEnviron{methodology2}[0]{
+ \begin{enumerate}[label=\textcolor{deep-gray}{\roman*\textasciitilde}]
+   \BODY
+ \end{enumerate}
 }
 % -
